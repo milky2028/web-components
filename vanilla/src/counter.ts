@@ -19,7 +19,7 @@ function createElement({ type, attributes, children = [] }: VirtualNode) {
   return el;
 }
 
-export default class VanillaCounter extends HTMLElement {
+const component = class VanillaCounter extends HTMLElement {
   private count = 0;
 
   constructor() {
@@ -82,6 +82,8 @@ export default class VanillaCounter extends HTMLElement {
     const countEl = document.querySelector('#count');
     countEl!.textContent = `Count: ${this.getCount()}`;
   };
-}
+};
 
-window.customElements.define('vanilla-counter', VanillaCounter);
+const name = 'vanilla-counter';
+
+export { component, name };

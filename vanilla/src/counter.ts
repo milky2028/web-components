@@ -19,7 +19,7 @@ function createElement({ type, attributes, children = [] }: VirtualNode) {
   return el;
 }
 
-class VanillaCounter extends HTMLElement {
+export default class VanillaCounter extends HTMLElement {
   private count = 0;
 
   constructor() {
@@ -78,10 +78,10 @@ class VanillaCounter extends HTMLElement {
     dec?.addEventListener('click', () => this.decrement());
   };
 
-  private updateCount() {
+  private updateCount = () => {
     const countEl = document.querySelector('#count');
     countEl!.textContent = `Count: ${this.getCount()}`;
-  }
+  };
 }
 
 window.customElements.define('vanilla-counter', VanillaCounter);

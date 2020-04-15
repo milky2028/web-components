@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Components Playground</title>
+  </head>
+  <body>
+    <vanilla-counter></vanilla-counter>
+
+    <script type="module">
+      import('/vanilla/dist/main.js').then(() =>
+        console.log('vanilla module instantiated!')
+      );
+    </script>
+  </body>
+</html>

@@ -20,8 +20,7 @@ export default [
     },
     output: {
       dir: 'dist',
-      format: 'esm',
-      entryFileNames: '[name]-[hash].js'
+      format: 'esm'
     },
     plugins
   }

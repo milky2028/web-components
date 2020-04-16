@@ -35,20 +35,22 @@ const component = class VanillaCounter extends HTMLElement {
   }
 
   // the component's public api
-  public getCount = () => this.count;
+  public getCount() {
+    return this.count;
+  }
 
   // the component's private api
-  private increment = () => {
+  private increment() {
     this.count++;
     this.updateCount();
-  };
+  }
 
-  private decrement = () => {
+  private decrement() {
     this.count--;
     this.updateCount();
-  };
+  }
 
-  private createTemplate = () => {
+  private createTemplate() {
     // create child elements as VirtualNodes
     const incBtn = {
       type: 'button',
@@ -72,7 +74,7 @@ const component = class VanillaCounter extends HTMLElement {
     // append root div to custom element itself
     this.attachShadow({ mode: 'open' });
     this.shadowRoot?.appendChild(parentDiv);
-  };
+  }
 
   private createListeners() {
     const inc = this.shadowRoot?.querySelector('#inc');
@@ -82,10 +84,10 @@ const component = class VanillaCounter extends HTMLElement {
     dec?.addEventListener('click', () => this.decrement());
   }
 
-  private updateCount = () => {
+  private updateCount() {
     const countEl = this.shadowRoot?.querySelector('#count');
     countEl!.textContent = `Count: ${this.getCount()}`;
-  };
+  }
 };
 
 const name = 'vanilla-counter';

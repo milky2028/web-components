@@ -2,7 +2,7 @@ import rimraf from 'rimraf';
 import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
 
-rimraf.sync('../public/vanilla-dist');
+rimraf.sync('../public/vanilla');
 
 const plugins = [
   typescript(),
@@ -19,7 +19,7 @@ export default [
       main: 'src/counter.ts'
     },
     output: {
-      dir: '../public/vanilla-dist',
+      dir: '../public/vanilla',
       format: 'esm'
     },
     plugins

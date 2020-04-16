@@ -70,19 +70,20 @@ const component = class VanillaCounter extends HTMLElement {
     });
 
     // append root div to custom element itself
-    this.appendChild(parentDiv);
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot?.appendChild(parentDiv);
   };
 
-  private createListeners = () => {
-    const inc = document.querySelector('#inc');
+  private createListeners() {
+    const inc = this.shadowRoot?.querySelector('#inc');
     inc?.addEventListener('click', () => this.increment());
 
-    const dec = document.querySelector('#dec');
+    const dec = this.shadowRoot?.querySelector('#dec');
     dec?.addEventListener('click', () => this.decrement());
-  };
+  }
 
   private updateCount = () => {
-    const countEl = document.querySelector('#count');
+    const countEl = this.shadowRoot?.querySelector('#count');
     countEl!.textContent = `Count: ${this.getCount()}`;
   };
 };

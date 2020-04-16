@@ -25,27 +25,32 @@ const component = class VanillaCounter extends HTMLElement {
   constructor() {
     // super instantiates the parent class
     super();
+  }
 
+  // web component methods akin to ngOnInit
+  public connectedCallback() {
     // create DOM stuff on init
     this.createTemplate();
     this.createListeners();
   }
 
   // the component's public api
-  public getCount = () => this.count;
+  public getCount() {
+    return this.count;
+  }
 
   // the component's private api
-  private increment = () => {
+  private increment() {
     this.count++;
     this.updateCount();
-  };
+  }
 
-  private decrement = () => {
+  private decrement() {
     this.count--;
     this.updateCount();
-  };
+  }
 
-  private createTemplate = () => {
+  private createTemplate() {
     // create child elements as VirtualNodes
     const incBtn = {
       type: 'button',
@@ -67,21 +72,22 @@ const component = class VanillaCounter extends HTMLElement {
     });
 
     // append root div to custom element itself
-    this.appendChild(parentDiv);
-  };
+    this.attachShadow({ mode: 'open' });
+    this.shadowRoot?.appendChild(parentDiv);
+  }
 
-  private createListeners = () => {
-    const inc = document.querySelector('#inc');
+  private createListeners() {
+    const inc = this.shadowRoot?.querySelector('#inc');
     inc?.addEventListener('click', () => this.increment());
 
-    const dec = document.querySelector('#dec');
+    const dec = this.shadowRoot?.querySelector('#dec');
     dec?.addEventListener('click', () => this.decrement());
-  };
+  }
 
-  private updateCount = () => {
-    const countEl = document.querySelector('#count');
+  private updateCount() {
+    const countEl = this.shadowRoot?.querySelector('#count');
     countEl!.textContent = `Count: ${this.getCount()}`;
-  };
+  }
 };
 
 const name = 'vanilla-counter';

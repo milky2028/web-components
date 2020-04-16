@@ -4,14 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Components Playground</title>
+    <!-- web component is sealed off from these styles inside shadow dom -->
+    <style>
+      #inc {
+        background-color: blueviolet;
+      }
+    </style>
   </head>
   <body>
-    <vanilla-counter></vanilla-counter>
-
+    <main id="main"></main>
     <script type="module">
-      import('/vanilla-dist/main.js').then(() =>
-        console.log('vanilla module instantiated!')
-      );
+      import('/vanilla-dist/main.js').then(({ name, component }) => {
+        window.customElements.define(name, component);
+
+        const main = document.getElementById('main');
+        const customElement = document.createElement(name);
+        main.appendChild(customElement);
+      });
     </script>
   </body>
 </html>

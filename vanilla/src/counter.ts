@@ -25,7 +25,10 @@ const component = class VanillaCounter extends HTMLElement {
   constructor() {
     // super instantiates the parent class
     super();
+  }
 
+  // web component methods akin to ngOnInit
+  public connectedCallback() {
     // create DOM stuff on init
     this.createTemplate();
     this.createListeners();

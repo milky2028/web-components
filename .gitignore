@@ -1,4 +1,5 @@
 **/node_modules/**
 **/dist/**
 hosting*
-public/vanilla-dist
+public/vanilla
+public/angular

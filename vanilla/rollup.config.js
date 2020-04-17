@@ -4,25 +4,30 @@ import { terser } from 'rollup-plugin-terser';
 
 rimraf.sync('../public/vanilla');
 
-const plugins = [
-  typescript(),
-  terser({
-    output: {
-      comments: false
-    }
-  })
-];
+export default ({ watch }) => {
+  const plugins = [typescript()];
 
-export default [
-  {
-    input: {
-      main: 'src/index.ts'
-    },
-    output: {
-      dir: '../public/vanilla',
-      format: 'esm',
-      chunkFileNames: '[name].js'
-    },
-    plugins
+  if (!watch) {
+    plugins.push(
+      terser({
+        output: {
+          comments: false
+        }
+      })
+    );
   }
-];
+
+  return [
+    {
+      input: {
+        main: 'src/index.ts'
+      },
+      output: {
+        dir: '../public/vanilla',
+        format: 'esm',
+        chunkFileNames: '[name].js'
+      },
+      plugins
+    }
+  ];
+};

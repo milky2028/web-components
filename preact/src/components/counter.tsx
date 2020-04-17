@@ -1,7 +1,7 @@
 import { h, render } from 'preact';
 import { useState } from 'preact/hooks';
 
-// with React/Preact and Hooks, can create components with functions
+// with React/Preact and Hooks, we can create components with functions
 function counterComponent() {
   const [count, setCount] = useState(0);
 

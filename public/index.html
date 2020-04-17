@@ -14,7 +14,15 @@
   <body>
     <main id="main"></main>
     <script type="module">
-      import('/vanilla-dist/main.js').then(({ name, component }) => {
+      import('/vanilla/counter.js').then(({ name, component }) => {
+        window.customElements.define(name, component);
+
+        const main = document.getElementById('main');
+        const customElement = document.createElement(name);
+        main.appendChild(customElement);
+      });
+
+      import('/preact/counter.js').then(({ name, component }) => {
         window.customElements.define(name, component);
 
         const main = document.getElementById('main');

@@ -1,3 +1,4 @@
+// __preactDebug__
 import { h, render, Component } from 'preact';
 import { useState } from 'preact/hooks';
 

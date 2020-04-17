@@ -1,6 +1,3 @@
-// @ts-ignore;
-__preactDebug__; // loads preact in debug mode in development, remove in production
-
 import { h, render, Component } from 'preact';
 import { useState } from 'preact/hooks';
 

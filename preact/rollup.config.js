@@ -11,11 +11,7 @@ export default ({ watch }) => {
   const extensions = ['.js', '.jsx', '.ts', '.tsx'];
   const plugins = [resolve({ extensions }), commonjs(), typescript()];
 
-  if (watch) {
-    plugins.push(replace({ [`__preactDebug__;`]: `import 'preact/debug';` }));
-  } else {
-    plugins.push(replace({ [`__preactDebug__;`]: '' }));
-
+  if (!watch) {
     plugins.push(
       terser({
         output: {

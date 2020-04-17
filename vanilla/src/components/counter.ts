@@ -32,6 +32,7 @@ class VanillaCounter extends HTMLElement {
 
   private createTemplate() {
     // create child elements as VirtualNodes
+    const header = { type: 'h2', attributes: { textContent: 'Vanilla' } };
     const incBtn = {
       type: 'button',
       attributes: { id: 'inc', textContent: 'Increment' }
@@ -48,7 +49,7 @@ class VanillaCounter extends HTMLElement {
     // create and append root element
     const parentDiv = createElement({
       type: 'div',
-      children: [incBtn, decBtn, count]
+      children: [header, incBtn, decBtn, count]
     });
 
     // append root div to custom element itself, remember "this" is an HTMLElement

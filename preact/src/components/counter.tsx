@@ -1,4 +1,7 @@
-import { h, render } from 'preact';
+// @ts-ignore;
+__preactDebug__; // loads preact in debug mode in development, remove in production
+
+import { h, render, Component } from 'preact';
 import { useState } from 'preact/hooks';
 
 // with React/Preact and Hooks, we can create components with functions
@@ -18,26 +21,22 @@ function counterComponent() {
   );
 }
 
-// we still need a base class that creates the web component
+class PreactRoot extends Component {
+  public render() {
+    return counterComponent();
+  }
+}
+
+// web component wrapper
 class PreactCounter extends HTMLElement {
-  // we cannot create DOM in the constructor, it's part of the spec
   constructor() {
-    // super instantiates the parent class
     super();
   }
 
-  // web component methods akin to ngOnInit
   public connectedCallback() {
-    // the mount point for Preact/React
-    // in a formal app/SPA, this is the app-root
-    const mountPoint = document.createElement('div');
-
-    // append root div to custom element itself, remember "this" is an HTMLElement
-    this.attachShadow({ mode: 'open' }).appendChild(mountPoint);
-
-    // create our component, render it inside the mount point
-    const counter = counterComponent();
-    render(counter, mountPoint);
+    const shadowRoot = this.attachShadow({ mode: 'open' });
+    // create Preact/React and attach mount it to the shadow root
+    render(<PreactRoot />, shadowRoot);
   }
 }
 

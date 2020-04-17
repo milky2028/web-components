@@ -6,39 +6,31 @@ import { terser } from 'rollup-plugin-terser';
 
 rimraf.sync('../public/preact');
 
-const extensions = ['.ts', '.tsx'];
-const plugins = [
-  resolve({ extensions }),
-  commonjs(),
-  typescript(),
-  // babel({
-  //   extensions,
-  //   exclude: ['node_modules/**'],
-  //   plugins: [
-  //     [
-  //       '@babel/plugin-transform-react-jsx',
-  //       { pragma: 'h', pragmaFrag: 'Fragment' }
-  //     ]
-  //   ],
-  //   runtimeHelpers: true
-  // }),
-  terser({
-    output: {
-      comments: false
-    }
-  })
-];
+export default ({ watch }) => {
+  const extensions = ['.ts', '.tsx'];
+  const plugins = [resolve({ extensions }), commonjs(), typescript()];
 
-export default [
-  {
-    input: {
-      main: 'src/index.ts'
-    },
-    output: {
-      dir: '../public/preact',
-      format: 'esm',
-      chunkFileNames: '[name].js'
-    },
-    plugins
+  if (!watch) {
+    plugins.push(
+      terser({
+        output: {
+          comments: false
+        }
+      })
+    );
   }
-];
+
+  return [
+    {
+      input: {
+        main: 'src/index.ts'
+      },
+      output: {
+        dir: '../public/preact',
+        format: 'esm',
+        chunkFileNames: '[name].js'
+      },
+      plugins
+    }
+  ];
+};

@@ -16,11 +16,12 @@ const plugins = [
 export default [
   {
     input: {
-      main: 'src/counter.ts'
+      main: 'src/index.ts'
     },
     output: {
       dir: '../public/vanilla',
-      format: 'esm'
+      format: 'esm',
+      chunkFileNames: '[name].js'
     },
     plugins
   }

@@ -1,10 +1,13 @@
-import { h } from 'preact';
+import { h, Component } from 'preact';
 import createWebComponent from '../bootstrap';
 
-function DragDemo() {
-  return <div>Hello from drag demo</div>;
+class DragDemo extends Component<{ title?: string }> {
+  render() {
+    return <div>{this.props.title ?? 'Drag Demo'}</div>;
+  }
 }
 
-const { name, component } = createWebComponent('drag-demo', DragDemo());
+const name = 'drag-demo';
+const component = createWebComponent(<DragDemo />);
 
 export { name, component };

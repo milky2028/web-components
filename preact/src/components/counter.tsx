@@ -3,8 +3,8 @@ import { useState } from 'preact/hooks';
 import createWebComponent from '../bootstrap';
 
 // with React/Preact and Hooks, we can create components with functions
-function Counter() {
-  const [count, setCount] = useState(0);
+function Counter({ initialCount = 0 }: { initialCount: number }) {
+  const [count, setCount] = useState(initialCount);
 
   const increment = () => setCount(count + 1);
   const decrement = () => setCount(count - 1);
@@ -19,6 +19,7 @@ function Counter() {
   );
 }
 
-const { name, component } = createWebComponent('preact-counter', Counter());
+const name = 'preact-counter';
+const component = createWebComponent(<Counter initialCount={10} />);
 
 export { name, component };

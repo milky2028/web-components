@@ -35,7 +35,7 @@ export default ({ watch }) => {
   return [
     {
       input: {
-        counter: 'src/bootstrap.tsx'
+        index: 'src/index.ts'
       },
       output: {
         dir: '../public/preact',

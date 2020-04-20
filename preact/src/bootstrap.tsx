@@ -16,7 +16,8 @@ class PreactCounter extends HTMLElement {
 
   public connectedCallback() {
     const shadowRoot = this.attachShadow({ mode: 'open' });
-    // create Preact/React and attach mount it to the shadow root
+
+    // create Preact/React and mount it to the shadow root of our root HTML element
     render(<PreactRoot />, shadowRoot);
   }
 }

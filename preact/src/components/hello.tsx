@@ -7,7 +7,7 @@ class HelloClass extends Component<{ title: string }> {
   }
 }
 
-const name = 'drag-demo';
+const name = 'hello-class';
 const component = createWebComponent(<HelloClass title="Hello Class!" />);
 
 export { name, component };

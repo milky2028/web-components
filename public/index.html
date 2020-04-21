@@ -6,6 +6,7 @@
     <title>Web Components Playground</title>
     <!-- web component is sealed off from these styles inside shadow dom -->
     <style>
+      /* This style doesn't affect elements in shadow dom */
       #inc {
         background-color: blueviolet;
       }
@@ -23,6 +24,14 @@
       });
 
       import('/preact/counter.js').then(({ name, component }) => {
+        window.customElements.define(name, component);
+
+        const main = document.getElementById('main');
+        const customElement = document.createElement(name);
+        main.appendChild(customElement);
+      });
+
+      import('/react/counter.js').then(({ name, component }) => {
         window.customElements.define(name, component);
 
         const main = document.getElementById('main');

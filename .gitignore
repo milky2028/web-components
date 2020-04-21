@@ -5,4 +5,5 @@ public/vanilla
 public/angular
 public/preact
 public/react
+public/vue
 **/.DS_Store

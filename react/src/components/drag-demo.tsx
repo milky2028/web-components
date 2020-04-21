@@ -1,7 +1,7 @@
-import React from 'react';
-import createWebComponent from '../createWebComponent';
+import { Component } from 'react';
+import { createWebComponent } from '../createWebComponent';
 
-class DragDemo extends React.Component<{ title?: string }> {
+class DragDemo extends Component<{ title?: string }> {
   render() {
     return <div>{this.props.title ?? 'Drag Demo'}</div>;
   }

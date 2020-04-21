@@ -1,7 +1,8 @@
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { stylesContainer } from './styleCache';
 
 // this is a factory function for creating web components
-export default function createWebComponent(VRoot: JSX.Element) {
+function createWebComponent(VRoot: JSX.Element) {
   // web component root, virtual dom root is mounted inside this element's shadow dom
   const WebComponent = class extends HTMLElement {
     constructor() {
@@ -12,10 +13,16 @@ export default function createWebComponent(VRoot: JSX.Element) {
     public connectedCallback() {
       const shadowRoot = this.attachShadow({ mode: 'open' });
 
-      // create Preact/React and mount it to the shadow root of our root HTML element
-      ReactDOM.render(VRoot, shadowRoot);
+      // create React and mount it to the shadow root of our root HTML element
+      render(VRoot, shadowRoot);
+
+      // react removes everything inside its mount element upon mount
+      // append the cache of emotion styles after react has mounted
+      shadowRoot.appendChild(stylesContainer);
     }
   };
 
   return WebComponent;
 }
+
+export { createWebComponent };

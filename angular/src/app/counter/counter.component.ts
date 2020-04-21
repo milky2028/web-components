@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-counter',
+  selector: 'app-angular-counter',
   templateUrl: './counter.component.html',
   styleUrls: ['./counter.component.css']
 })

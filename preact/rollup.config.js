@@ -15,6 +15,8 @@ export default ({ watch }) => {
     commonjs(),
     typescript(),
     babel({
+      babelrc: false,
+      configFile: false,
       extensions,
       exclude: ['node_modules/**'],
       plugins: [

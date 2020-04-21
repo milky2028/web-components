@@ -1,5 +1,5 @@
 import { render } from 'react-dom';
-import { stylesContainer } from './styleCache';
+import { stylesContainer } from './styles';
 
 // this is a factory function for creating web components
 function createWebComponent(VRoot: JSX.Element) {
@@ -11,14 +11,15 @@ function createWebComponent(VRoot: JSX.Element) {
 
     // part of the the web component's api, akin to ngOnInit
     public connectedCallback() {
-      const shadowRoot = this.attachShadow({ mode: 'open' });
+      const shadowRoot = this.attachShadow({
+        mode: 'open'
+      });
 
       // create React and mount it to the shadow root of our root HTML element
-      render(VRoot, shadowRoot);
-
-      // react removes everything inside its mount element upon mount
-      // append the cache of emotion styles after react has mounted
-      shadowRoot.appendChild(stylesContainer);
+      render(VRoot, shadowRoot, () => {
+        // append our stylesheet for emotion
+        shadowRoot.prepend(stylesContainer);
+      });
     }
   };
 

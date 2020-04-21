@@ -1,4 +1,4 @@
-import createCache from '@emotion/cache';
+import createEmotion from 'create-emotion';
 
 // by default, emotion creates a stylesheet at in the head of the current document
 // these styles do not affect shadow dom
@@ -6,9 +6,9 @@ import createCache from '@emotion/cache';
 const stylesContainer = document.createElement('div');
 stylesContainer.id = 'styles-container';
 
-const shadowCache = createCache({
+const stylesheet = createEmotion({
   key: 'shadow',
   container: stylesContainer
 });
 
-export { shadowCache, stylesContainer };
+export { stylesheet, stylesContainer };

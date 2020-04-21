@@ -21,7 +21,9 @@ export default ({ watch }) => {
         [
           '@babel/plugin-transform-react-jsx',
           { pragma: 'h', pragmaFrag: 'Fragment' }
-        ]
+        ],
+        ['@babel/plugin-proposal-optional-chaining'],
+        ['@babel/plugin-proposal-nullish-coalescing-operator']
       ],
       runtimeHelpers: true
     })

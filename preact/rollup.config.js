@@ -20,6 +20,7 @@ export default ({ watch }) => {
       extensions,
       exclude: ['node_modules/**'],
       plugins: [
+        ['emotion'],
         [
           '@babel/plugin-transform-react-jsx',
           { pragma: 'h', pragmaFrag: 'Fragment' }

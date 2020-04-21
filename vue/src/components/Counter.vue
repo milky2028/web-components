@@ -14,15 +14,21 @@ button {
 </style>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api';
+import Vue from 'vue';
 
-export default defineComponent({
-  setup() {
-    const count = ref(0);
-    const increment = () => count.value++;
-    const decrement = () => count.value--;
-
-    return { count, increment, decrement };
+export default Vue.extend({
+  data() {
+    return {
+      count: 0
+    };
+  },
+  methods: {
+    increment() {
+      this.count++;
+    },
+    decrement() {
+      this.count--;
+    }
   }
 });
 </script>

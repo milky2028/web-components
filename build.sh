@@ -12,7 +12,7 @@ cd ..
 cd angular && rm -rf node_modules && yarn && yarn build --prod --named-chunks
 cd ..
 
-cd vue && rm -rf node_modules && yarn && yarn build --target wc-async --name vue-counter --inline-vue src/components/*.vue
+cd vue && rm -rf node_modules && yarn && yarn build --target wc-async --inline-vue src/components/*.vue
 cd ..
 
 firebase deploy

@@ -9,10 +9,17 @@ function Counter({ initialCount = 0 }: { initialCount: number }) {
   const increment = () => setCount(count + 1);
   const decrement = () => setCount(count - 1);
 
+  const blue = {
+    backgroundColor: 'blue',
+    color: 'white'
+  };
+
   return (
     <div>
       <h2>Preact</h2>
-      <button onClick={increment}>Increment</button>
+      <button style={blue} onClick={increment}>
+        Increment
+      </button>
       <button onClick={decrement}>Decrement</button>
       <p>Count: {count}</p>
     </div>

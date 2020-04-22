@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>Vue</h2>
     <button @click="increment">Increment</button>
     <button @click="decrement">Decrement</button>
     <p>Count: {{ count }}</p>

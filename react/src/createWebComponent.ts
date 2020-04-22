@@ -1,5 +1,4 @@
 import { render } from 'react-dom';
-import { stylesContainer } from './styles';
 
 // this is a factory function for creating web components
 function createWebComponent(VRoot: JSX.Element) {
@@ -16,10 +15,7 @@ function createWebComponent(VRoot: JSX.Element) {
       });
 
       // create React and mount it to the shadow root of our root HTML element
-      render(VRoot, shadowRoot, () => {
-        // append our stylesheet for emotion
-        shadowRoot.prepend(stylesContainer);
-      });
+      render(VRoot, shadowRoot);
     }
   };
 

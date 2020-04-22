@@ -1,7 +1,6 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import createWebComponent from '../bootstrap';
-import { stylesheet } from '../styleCache';
 
 // with React/Preact and Hooks, we can create components with functions
 function Counter({ initialCount = 0 }: { initialCount: number }) {
@@ -10,18 +9,15 @@ function Counter({ initialCount = 0 }: { initialCount: number }) {
   const increment = () => setCount(count + 1);
   const decrement = () => setCount(count - 1);
 
-  const blueBtn = stylesheet.css`
-    background-color: blue;
-    color: white;
-    &:hover {
-      color: orange;
-    }
-  `;
+  const blueBtn = {
+    backgroundColor: 'blue',
+    color: 'white'
+  };
 
   return (
     <div>
       <h2>Preact</h2>
-      <button className={blueBtn} onClick={increment}>
+      <button style={blueBtn} onClick={increment}>
         Increment
       </button>
       <button onClick={decrement}>Decrement</button>

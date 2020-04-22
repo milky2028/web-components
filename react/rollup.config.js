@@ -34,8 +34,7 @@ export default ({ watch }) => {
       plugins: [
         ['@babel/plugin-transform-react-jsx'],
         ['@babel/plugin-proposal-nullish-coalescing-operator'],
-        ['@babel/plugin-proposal-optional-chaining'],
-        ['emotion']
+        ['@babel/plugin-proposal-optional-chaining']
       ],
       runtimeHelpers: true
     })

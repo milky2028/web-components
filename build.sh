@@ -15,4 +15,7 @@ cd ..
 cd vue && rm -rf node_modules && yarn && yarn build --target wc-async --inline-vue src/components/*.vue
 cd ..
 
+cd stencil && rm -rf node_modules && yarn && yarn build
+cd ..
+
 firebase deploy

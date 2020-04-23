@@ -8,8 +8,8 @@ import { Component, Host, h, Prop } from '@stencil/core';
 export class StencilCounter {
   @Prop() public count = 0;
 
-  #increment = () => this.count++;
-  #decrement = () => this.count--;
+  private increment = () => this.count++;
+  private decrement = () => this.count--;
 
   render() {
     return (
@@ -18,8 +18,8 @@ export class StencilCounter {
           <h1>
             <slot></slot>
           </h1>
-          <button onClick={this.#increment}>Increment</button>
-          <button onClick={this.#decrement}>Decrement</button>
+          <button onClick={this.increment}>Increment</button>
+          <button onClick={this.decrement}>Decrement</button>
           <p>Count: {this.count}</p>
         </div>
       </Host>

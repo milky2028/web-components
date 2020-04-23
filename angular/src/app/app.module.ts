@@ -1,14 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NgModule,
+  CUSTOM_ELEMENTS_SCHEMA,
+  DoBootstrap,
+  Injector
+} from '@angular/core';
 
-import { AppComponent } from './app.component';
 import { CounterComponent } from './counter/counter.component';
+import { createCustomElement } from '@angular/elements';
 
 @NgModule({
-  declarations: [AppComponent, CounterComponent],
+  declarations: [CounterComponent],
   imports: [BrowserModule],
   providers: [],
-  bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule implements DoBootstrap {
+  constructor(private injector: Injector) {
+    const webComponent = createCustomElement(CounterComponent, {
+      injector: this.injector
+    });
+    customElements.define('angular-counter', webComponent);
+  }
+
+  ngDoBootstrap() {}
+}

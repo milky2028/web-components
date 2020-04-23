@@ -15,28 +15,32 @@
   <body>
     <main id="main"></main>
     <script type="module">
-      import('/vanilla/counter.js').then(({ name, component }) => {
-        window.customElements.define(name, component);
-
+      function attachCustomElement(name) {
         const main = document.getElementById('main');
         const customElement = document.createElement(name);
         main.appendChild(customElement);
+      }
+
+      import('/vanilla/counter.js').then(({ name, component }) => {
+        customElements.define(name, component);
+
+        attachCustomElement(name);
       });
 
-      import('/preact/counter.js').then(({ name, component }) => {
-        window.customElements.define(name, component);
+      import('/angular/polyfills.js')
+        .then(() => import('/angular/main.js'))
+        .then(() => attachCustomElement('angular-counter'));
 
-        const main = document.getElementById('main');
-        const customElement = document.createElement(name);
-        main.appendChild(customElement);
+      import('/preact/counter.js').then(({ name, component }) => {
+        customElements.define(name, component);
+
+        attachCustomElement(name);
       });
 
       import('/react/counter.js').then(({ name, component }) => {
-        window.customElements.define(name, component);
+        customElements.define(name, component);
 
-        const main = document.getElementById('main');
-        const customElement = document.createElement(name);
-        main.appendChild(customElement);
+        attachCustomElement(name);
       });
 
       const createStencil = () => {
@@ -51,10 +55,7 @@
       };
 
       createStencil().then(() => {
-        const main = document.getElementById('main');
-        const customElement = document.createElement('stencil-counter');
-        customElement.textContent = 'Stencil';
-        main.appendChild(customElement);
+        attachCustomElement('stencil-counter');
       });
     </script>
   </body>

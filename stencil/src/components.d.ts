@@ -6,11 +6,19 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface HelloWorld {
+    }
     interface StencilCounter {
         "count": number;
     }
 }
 declare global {
+    interface HTMLHelloWorldElement extends Components.HelloWorld, HTMLStencilElement {
+    }
+    var HTMLHelloWorldElement: {
+        prototype: HTMLHelloWorldElement;
+        new (): HTMLHelloWorldElement;
+    };
     interface HTMLStencilCounterElement extends Components.StencilCounter, HTMLStencilElement {
     }
     var HTMLStencilCounterElement: {
@@ -18,14 +26,18 @@ declare global {
         new (): HTMLStencilCounterElement;
     };
     interface HTMLElementTagNameMap {
+        "hello-world": HTMLHelloWorldElement;
         "stencil-counter": HTMLStencilCounterElement;
     }
 }
 declare namespace LocalJSX {
+    interface HelloWorld {
+    }
     interface StencilCounter {
         "count"?: number;
     }
     interface IntrinsicElements {
+        "hello-world": HelloWorld;
         "stencil-counter": StencilCounter;
     }
 }
@@ -33,6 +45,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "hello-world": LocalJSX.HelloWorld & JSXBase.HTMLAttributes<HTMLHelloWorldElement>;
             "stencil-counter": LocalJSX.StencilCounter & JSXBase.HTMLAttributes<HTMLStencilCounterElement>;
         }
     }

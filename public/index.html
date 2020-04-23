@@ -38,6 +38,24 @@
         const customElement = document.createElement(name);
         main.appendChild(customElement);
       });
+
+      const createStencil = () => {
+        return new Promise((resolve) => {
+          const stencilScript = document.createElement('script');
+          stencilScript.src = '/stencil/build/stencil.esm.js';
+          stencilScript.type = 'module';
+          stencilScript.onload = () => resolve();
+
+          document.body.appendChild(stencilScript);
+        });
+      };
+
+      createStencil().then(() => {
+        const main = document.getElementById('main');
+        const customElement = document.createElement('stencil-counter');
+        customElement.textContent = 'Stencil';
+        main.appendChild(customElement);
+      });
     </script>
   </body>
 </html>

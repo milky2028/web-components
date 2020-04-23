@@ -6,47 +6,47 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface HelloWorld {
-    }
     interface StencilCounter {
         "count": number;
     }
+    interface StencilHello {
+    }
 }
 declare global {
-    interface HTMLHelloWorldElement extends Components.HelloWorld, HTMLStencilElement {
-    }
-    var HTMLHelloWorldElement: {
-        prototype: HTMLHelloWorldElement;
-        new (): HTMLHelloWorldElement;
-    };
     interface HTMLStencilCounterElement extends Components.StencilCounter, HTMLStencilElement {
     }
     var HTMLStencilCounterElement: {
         prototype: HTMLStencilCounterElement;
         new (): HTMLStencilCounterElement;
     };
+    interface HTMLStencilHelloElement extends Components.StencilHello, HTMLStencilElement {
+    }
+    var HTMLStencilHelloElement: {
+        prototype: HTMLStencilHelloElement;
+        new (): HTMLStencilHelloElement;
+    };
     interface HTMLElementTagNameMap {
-        "hello-world": HTMLHelloWorldElement;
         "stencil-counter": HTMLStencilCounterElement;
+        "stencil-hello": HTMLStencilHelloElement;
     }
 }
 declare namespace LocalJSX {
-    interface HelloWorld {
-    }
     interface StencilCounter {
         "count"?: number;
     }
+    interface StencilHello {
+    }
     interface IntrinsicElements {
-        "hello-world": HelloWorld;
         "stencil-counter": StencilCounter;
+        "stencil-hello": StencilHello;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "hello-world": LocalJSX.HelloWorld & JSXBase.HTMLAttributes<HTMLHelloWorldElement>;
             "stencil-counter": LocalJSX.StencilCounter & JSXBase.HTMLAttributes<HTMLStencilCounterElement>;
+            "stencil-hello": LocalJSX.StencilHello & JSXBase.HTMLAttributes<HTMLStencilHelloElement>;
         }
     }
 }

@@ -9,6 +9,7 @@ export const config: Config = {
     {
       type: 'www',
       dir: '../public/stencil',
+      baseUrl: 'https://sr-web-components.web.app/stencil/build/',
       serviceWorker: null // disable service workers
     }
   ]

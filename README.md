@@ -19,6 +19,7 @@ The packages below are not web components tools per se, but just JavaScript tool
 | rollup         | 1,800,000            |
 | vue            | 1,600,000            |
 | preact         | 279,000              |
+| ngx-build-plus | 29,000               |
 
 ### Counter Component Size Comparisons
 

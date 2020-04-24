@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.googleapis.com/icon?family=Material+Icons);
+}
+
+:host {
+  display: block;
+  width: 100%;
+  --grey: rgba(0, 0, 0, 0.12);
+  --dark-grey: rgba(0, 0, 0, .24)
+  font-size: 1rem;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
+
+.mat-icon {
+  display: inline-block;
+  font-family: 'Material Icons' !important;
+  font-size: 24px;
+  color: var(--dark-grey);
+}
+
+.brightness-icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+h2 {
+  padding-left: 1rem;
+  font-size: 1.3rem;
+}
+
+table {
+  width: 100%;
+}
+
+.table-header {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 12px 16px;
+}
+
+td {
+  border: 1px solid var(--grey);
+}

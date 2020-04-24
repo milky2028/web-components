@@ -11,6 +11,11 @@ export namespace Components {
     }
     interface StencilHello {
     }
+    interface StencilRealtimePrices {
+        "loans": any[];
+        "primaryColor": string;
+        "theme": "light" | "dark";
+    }
 }
 declare global {
     interface HTMLStencilCounterElement extends Components.StencilCounter, HTMLStencilElement {
@@ -25,9 +30,16 @@ declare global {
         prototype: HTMLStencilHelloElement;
         new (): HTMLStencilHelloElement;
     };
+    interface HTMLStencilRealtimePricesElement extends Components.StencilRealtimePrices, HTMLStencilElement {
+    }
+    var HTMLStencilRealtimePricesElement: {
+        prototype: HTMLStencilRealtimePricesElement;
+        new (): HTMLStencilRealtimePricesElement;
+    };
     interface HTMLElementTagNameMap {
         "stencil-counter": HTMLStencilCounterElement;
         "stencil-hello": HTMLStencilHelloElement;
+        "stencil-realtime-prices": HTMLStencilRealtimePricesElement;
     }
 }
 declare namespace LocalJSX {
@@ -36,9 +48,15 @@ declare namespace LocalJSX {
     }
     interface StencilHello {
     }
+    interface StencilRealtimePrices {
+        "loans"?: any[];
+        "primaryColor"?: string;
+        "theme"?: "light" | "dark";
+    }
     interface IntrinsicElements {
         "stencil-counter": StencilCounter;
         "stencil-hello": StencilHello;
+        "stencil-realtime-prices": StencilRealtimePrices;
     }
 }
 export { LocalJSX as JSX };
@@ -47,6 +65,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "stencil-counter": LocalJSX.StencilCounter & JSXBase.HTMLAttributes<HTMLStencilCounterElement>;
             "stencil-hello": LocalJSX.StencilHello & JSXBase.HTMLAttributes<HTMLStencilHelloElement>;
+            "stencil-realtime-prices": LocalJSX.StencilRealtimePrices & JSXBase.HTMLAttributes<HTMLStencilRealtimePricesElement>;
         }
     }
 }

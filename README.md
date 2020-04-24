@@ -197,7 +197,7 @@ Vue Component Example
 
 Draw
 
-- Vue's file small isn't the smallest, but it also isn't the biggest.
+- Vue's file size isn't the smallest, but it also isn't the biggest.
 
 - Not supported by a large company, but the people who make Vue are formal Googlers and make their entire living from Vue.
 

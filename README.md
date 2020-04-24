@@ -1,5 +1,7 @@
 # web-components
 
-| Framework/Tool              | Weekly NPM Downloads | Counter Component Size | GZipped Size |
-| --------------------------- | -------------------- | ---------------------- | ------------ |
+Popularity of Some Common Web Components Solutions
+
+| Framework/Tool              | Weekly NPM Downloads | 
+| --------------------------- | -------------------- | 
 | @vue/web-components-wrapper | 470,000              | 

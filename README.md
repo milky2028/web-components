@@ -27,7 +27,7 @@ These comparisons aren't perfect since the code isn't _exactly_ the same, but th
 
 | Framework/Tool | Size   | GZipped Size |
 | -------------- | ------ | ------------ |
-| vanilla js     | 1.2kb  | 539b         |
+| vanilla js/ts  | 1.2kb  | 539b         |
 | preact         | 10.3kb | 4.4kb        |
 | **stencil**    | 12.4kb | 5.95kb       |
 | vue            | 73kb   | 27.1kb       |

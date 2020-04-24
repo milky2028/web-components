@@ -95,12 +95,13 @@ import { h } from 'preact';
 import { useState } from 'preact/hooks';
 
 // with React/Preact and Hooks, we can create components with functions
-function Counter({ initialCount = 0 }: { initialCount: number }) {
+function Counter(initialCount = 0) {
   const [count, setCount] = useState(initialCount);
 
   const increment = () => setCount(count + 1);
   const decrement = () => setCount(count - 1);
 
+  // css in js
   const blueBtn = {
     backgroundColor: 'blue',
     color: 'white'
@@ -293,6 +294,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: true
 })
 export class StencilCounter {
+  // expose as a public property/html attribute
   @Prop() count = 0;
 
   private increment = () => this.count++;

@@ -50,6 +50,8 @@ Draw
 
 - Custom build process. React does not formally support web components, beyond the fact that you can attach React to any DOM node. This requires a custom build process, which I did with Rollup. The Angular library itself and many other popular packages are built with Rollup. Rollup is extremely easy to use compared to Webpack. A custom build process offers infinite customizability, but must be maintained, so this can be seen as both a pro and a con. A custom build process is a project that can never die or go into maintenance since we maintain it.
 
+- Supported by Facebook. This is a draw because large corporate support seems like a pro as first glance, until you realize that large companies can more readily make sweeping changes on a dime that can compromise a project's viability. For examples, see React's licensing crisis or the fallout from Angular 1 moving to TypeScript in Angular 2.
+
 Cons
 
 - Unfamiliar. New syntax would have to be learned and new methodogies understood.
@@ -85,6 +87,8 @@ Draw
 
 - Custom build process required.
 
+- Not supported by a large company.
+
 Cons
 
 - Unfamiliar.
@@ -110,6 +114,8 @@ Pros
 Draw
 
 - Vue's file small isn't the smallest, but it also isn't the biggest.
+
+- Not supported by a large company, but the people who make Vue are formal Googlers and make their entire living from Vue.
 
 Cons
 
@@ -145,11 +151,17 @@ Cons
 
 ## Angular
 
+Unlike the other frameworks on this list, Angular does not use a virtual DOM, but instead adds watchers to values in the DOM that may change and watches those values for changes.
+
 Pros
 
 - Familar. We already use it.
 
 - Great TypeScript support.
+
+Draw
+
+- Backed by Google.
 
 Cons
 
@@ -158,3 +170,5 @@ Cons
 - Custom build process. This one is in the cons section this time because third-party libraries are required on top of the already rigid Angular build process. With Preact, React, and a Vanilla JS/TS at least we get the benefits of being able to change any part of the process. With Angular, we just sort of get what we get and we still have to rely on third-party libraries.
 
 - No single file components. I think this is a con, but other people may not care.
+
+## Stencil

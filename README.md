@@ -13,13 +13,14 @@
 
 The packages below are not web components tools per se, but just JavaScript tools in general, so they're not really applicable to the table above. I'm inlcuding their popularity since I used them in this process.
 
-| Framework/Tool | Weekly NPM Downloads |
-| -------------- | -------------------- |
-| react          | 8,402,000            |
-| rollup         | 1,800,000            |
-| vue            | 1,600,000            |
-| preact         | 279,000              |
-| ngx-build-plus | 29,000               |
+| Framework/Tool       | Weekly NPM Downloads |
+| -------------------- | -------------------- |
+| react                | 8,402,000            |
+| @angular-devkit/core | 3,261,000            |
+| rollup               | 1,800,000            |
+| vue                  | 1,600,000            |
+| preact               | 279,000              |
+| ngx-build-plus       | 29,000               |
 
 ### Counter Component Size Comparisons
 
@@ -229,9 +230,11 @@ Draw
 
 - Custom build process.
 
+- No built-in testing support.
+
 Cons
 
-- Traditional DOM methods require the developer to write alot of code. I don't mind them that much, but your mileage may vary. Even in writing this example, I had to start to define some helper methods so I didn't keep repeating myself. It should also be noted though that web components in general will require more familiarity with native DOM methods. Even Angular's examples rely on traditional DOM methods.
+- Traditional DOM methods require the developer to write alot of code. I don't mind them that much, but your mileage may vary. Even in writing this example, I had to define some helper methods so I didn't keep repeating myself. It should also be noted though that web components in general will require more familiarity with native DOM methods. Even Angular's examples rely on traditional DOM methods.
 
 ## Angular
 
@@ -242,6 +245,8 @@ Pros
 - Familar. We already use it.
 
 - Great TypeScript support.
+
+- Built-in testing support.
 
 Draw
 
@@ -257,15 +262,15 @@ Cons
 
 ## Stencil
 
-Stencil is a compiler, rather than a runtime framework that compiles directly to standards-compliant web components. Stencil uses a virtual dom to diff and make changes to the dom itself. I'll just say in general that I think this is project we should use.
+Stencil is a compiler, rather than a runtime framework that compiles directly to standards-compliant web components. Stencil uses a virtual dom. I think this is project we should use.
 
 Pros
 
-- Small file size. Stencil has a runtime that it is packaged with, but it's not very big.
+- Small file size. Stencil has a runtime that it's packaged with, but it's not very big.
 
 - Native TypeScript support.
 
-- Built-in docs solution. This is a cool one.
+- Built-in docs solution.
 
 - Built-in testing infrastructure.
 
@@ -275,7 +280,7 @@ Pros
 
 Draw
 
-- Familiarity. Stencil components tend to look a little bit like a mix of React, Angular, and Vue. Stencil uses JSX, similar to React, but it also heavily leaves into TypeScript decorators, similar to Angular.
+- Familiarity. Stencil components tend to look a little bit like a mix of React, Angular, and Vue. Stencil uses JSX, similar to React, but it also heavily leans into TypeScript decorators, similar to Angular.
 
 Stencil Component Example
 
@@ -311,13 +316,13 @@ export class StencilCounter {
 
 - Supported by Ionic.
 
-- CSS is packaged in seperate files, so files can be singularly distributed as one JavaScript file, but css is written in different files. So not written as file, but distributed as single file.
+- CSS is writetn in seperate files, but components can be singularly distributed as one JavaScript fil. So not written as file, but distributed as single file.
 
 Cons
 
-- Not super popular.
+- Not super popular, but about as popular as some third-party libraries we might have to rely on if using Angular.
 
-## Some other solutions I looked at, but did not fully consider
+## Some other solutions I looked at, but didn't fully consider
 
 Polymer
 

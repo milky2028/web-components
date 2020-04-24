@@ -23,7 +23,7 @@ The packages below are not web components tools per se, but just JavaScript tool
 
 ### Counter Component Size Comparisons
 
-These comparisons aren't perfect since the code isn't _exactly_ the same, but the difference aren't enough to make it matter anyways. All sizes are minified.
+These comparisons aren't perfect since the code isn't _exactly_ the same, but the differences aren't enough to make it matter anyways. All sizes are minified.
 
 | Framework/Tool | Size   | GZipped Size |
 | -------------- | ------ | ------------ |
@@ -36,21 +36,29 @@ These comparisons aren't perfect since the code isn't _exactly_ the same, but th
 
 ## React
 
-React uses a virtual DOM to create a virtual representation of the DOM, then that diffs that with actual DOM. It updates the actual DOM with any changes. This offers a great developer experience, but it can be costly, performance-wise.
+React uses a virtual DOM to create a virtual representation of the DOM, then that diffs that with actual DOM. It updates the actual DOM with any changes. This offers a great developer experience, but it can be costly, performance-wise. React tends to focus on perceptive speed more than actual speed.
 
 Pros
 
 - React might just be most popular libary on NPM. Help is easy to find and the ecosystem is vast.
 
-- Single file components. HTML, CSS, and JavaScript are used with few boundaries between them in React.
+- Single file components. HTML, CSS, and JavaScript are used with few boundaries between them in React. React uses JSX, a custom extension of JavaScript that's now basically everywhere.
+
+JSX Example
+
+```javascript
+const aDiv = <div>Some div content</div>;
+```
 
 - Great TypeScript support.
 
 Draw
 
-- Custom build process. React does not formally support web components, beyond the fact that you can attach React to any DOM node. This requires a custom build process, which I did with Rollup. The Angular library itself and many other popular packages are built with Rollup. Rollup is extremely easy to use compared to Webpack. A custom build process offers infinite customizability, but must be maintained, so this can be seen as both a pro and a con. A custom build process is a project that can never die or go into maintenance since we maintain it.
+- Custom build process. React does not formally support web components, beyond the fact that you can attach React to any DOM node. This requires a custom build process, which I did with Rollup. The Angular library itself and many other popular packages are built with Rollup. Rollup is extremely easy to use and customize, as compared to Webpack. A custom build process offers infinite customizability, but must be maintained, so this can be seen as both a pro and a con. A custom build process is a project that can never die or go into maintenance since we maintain it, and it does exactly what we want.
 
 - Supported by Facebook. This is a draw because large corporate support seems like a pro as first glance, until you realize that large companies can more readily make sweeping changes on a dime that can compromise a project's viability. For examples, see React's licensing crisis or the fallout from Angular 1 moving to TypeScript in Angular 2.
+
+- No built-in testing support, but the React community has basically solved this problem.
 
 Cons
 
@@ -67,7 +75,7 @@ const blue = {
 };
 ```
 
-- CSS in JS. React natively supports CSS via CSS in JS, as well as through traditional CSS files. Since we need to bundle and ship as a single JS file, traditional CSS isn't possible. CSS in JS has its perks, but it's not performant since it involves diffing a large string of styles and things that used to be simple in CSS, like hover states, all of the sudden get very complicated, requiring onmouseover event handlers. The React community has created performant solutions with a great developer experience to these problems, but getting these solutions to work inside shadow DOM is verrrrrrrrry complicated. I spent about two days trying to get this to work consistently, but I could not.
+- CSS in JS. React natively supports CSS via CSS in JS, as well as through traditional CSS files. Since we need to bundle and ship as a single JS file, traditional CSS isn't possible. CSS in JS has its perks, but it's not performant since it involves diffing a large string of styles and things that used to be simple in CSS, like hover states, all of the sudden get very complicated, requiring onmouseover event handlers. React's own website does not recommend useing plain CSS in JS/ The React community has created performant solutions with a great developer experience to these problems, but getting these solutions to work inside shadow DOM is verrrrrrrrry complicated. I spent about two days trying to get this to work consistently with a library called Emotion, but I could not.
 
 ## Preact
 
@@ -79,6 +87,38 @@ Pros
 
 - Single file components.
 
+Preact Component Example
+
+```tsx
+import { h } from 'preact';
+import { useState } from 'preact/hooks';
+
+// with React/Preact and Hooks, we can create components with functions
+function Counter({ initialCount = 0 }: { initialCount: number }) {
+  const [count, setCount] = useState(initialCount);
+
+  const increment = () => setCount(count + 1);
+  const decrement = () => setCount(count - 1);
+
+  const blueBtn = {
+    backgroundColor: 'blue',
+    color: 'white'
+  };
+
+  // jsx
+  return (
+    <div>
+      <h2>Preact</h2>
+      <button style={blueBtn} onClick={increment}>
+        Increment
+      </button>
+      <button onClick={decrement}>Decrement</button>
+      <p>Count: {count}</p>
+    </div>
+  );
+}
+```
+
 - Great TypeScript support.
 
 - Extremely small file size.
@@ -88,6 +128,8 @@ Draw
 - Custom build process required.
 
 - Not supported by a large company.
+
+- No built-in testing support, but the community has basically solved this problem.
 
 Cons
 
@@ -105,7 +147,49 @@ Pros
 
 - Vue has native support for compiling an entire library to web components with a single command.
 
+- Built-in testing support.
+
 - Single file components.
+
+Vue Component Example
+
+```html
+<template>
+  <div>
+    <h2>Vue</h2>
+    <button @click="increment">Increment</button>
+    <button @click="decrement">Decrement</button>
+    <p>Count: {{ count }}</p>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+  button {
+    background-color: blueviolet;
+    color: white;
+  }
+</style>
+
+<script lang="ts">
+  import Vue from 'vue';
+
+  export default Vue.extend({
+    data() {
+      return {
+        count: 0
+      };
+    },
+    methods: {
+      increment() {
+        this.count++;
+      },
+      decrement() {
+        this.count--;
+      }
+    }
+  });
+</script>
+```
 
 - Easy to learn.
 
@@ -172,3 +256,77 @@ Cons
 - No single file components. I think this is a con, but other people may not care.
 
 ## Stencil
+
+Stencil is a compiler, rather than a runtime framework that compiles directly to standards-compliant web components. Stencil uses a virtual dom to diff and make changes to the dom itself. I'll just say in general that I think this is project we should use.
+
+Pros
+
+- Small file size. Stencil has a runtime that it is packaged with, but it's not very big.
+
+- Native TypeScript support.
+
+- Built-in docs solution. This is a cool one.
+
+- Built-in testing infrastructure.
+
+- Natively supports lazy-loading components.
+
+- Natively compiles to web components.
+
+Draw
+
+- Familiarity. Stencil components tend to look a little bit like a mix of React, Angular, and Vue. Stencil uses JSX, similar to React, but it also heavily leaves into TypeScript decorators, similar to Angular.
+
+Stencil Component Example
+
+```tsx
+import { Component, Host, h, Prop } from '@stencil/core';
+
+@Component({
+  tag: 'stencil-counter',
+  styleUrl: 'stencil-counter.css',
+  shadow: true
+})
+export class StencilCounter {
+  @Prop() count = 0;
+
+  private increment = () => this.count++;
+  private decrement = () => this.count--;
+
+  render() {
+    // jsx
+    return (
+      <Host>
+        <div>
+          <h2>Stencil</h2>
+          <button onClick={this.increment}>Increment</button>
+          <button onClick={this.decrement}>Decrement</button>
+          <p>Count: {this.count}</p>
+        </div>
+      </Host>
+    );
+  }
+}
+```
+
+- Supported by Ionic.
+
+- CSS is packaged in seperate files, so files can be singularly distributed as one JavaScript file, but css is written in different files. So not written as file, but distributed as single file.
+
+Cons
+
+- Not super popular.
+
+## Some other solutions I looked at, but did not fully consider
+
+Polymer
+
+I've used Polymer in the past, but I didn't love it. In V3, they've since moved to LitElement to create web components. Google supports it heavily. Might be worth a second look, but this project is semi-dead.
+
+Lightning Web Components
+
+Web Components library created by Salesforce. Didn't seem to be super popular.
+
+Skate JS
+
+Also didn't seem to be super popular.

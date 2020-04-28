@@ -13,8 +13,6 @@ export namespace Components {
     }
     interface StencilRealtimePrices {
         "loans": any[];
-        "primaryColor": string;
-        "theme": "light" | "dark";
     }
 }
 declare global {
@@ -50,8 +48,6 @@ declare namespace LocalJSX {
     }
     interface StencilRealtimePrices {
         "loans"?: any[];
-        "primaryColor"?: string;
-        "theme"?: "light" | "dark";
     }
     interface IntrinsicElements {
         "stencil-counter": StencilCounter;

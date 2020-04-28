@@ -14,19 +14,18 @@
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'liga';
+  box-sizing: border-box;
 }
 
 .mat-icon {
   display: inline-block;
   font-family: 'Material Icons' !important;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: var(--border);
   cursor: pointer;
   border-radius: 2rem;
   user-select: none;
   transition: color 50ms ease;
-  padding: 0.8rem;
-  margin: 0.2rem;
 }
 
 .mat-icon:active {
@@ -34,27 +33,60 @@
 }
 
 .brightness-icon {
-  position: absolute;
-  top: 0;
-  right: 0;
+  padding: 0.8rem;
+  margin: 0.2rem;
+}
+
+.page-header {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
 }
 
 h2 {
   padding-left: 1rem;
   font-size: 1.3rem;
   color: var(--text);
+  margin: 0.5rem 0;
 }
 
 table {
   width: 100%;
 }
 
-.table-header {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 12px 16px;
+table,
+th,
+td {
+  border: 0.25px solid var(--border);
 }
 
-td {
-  border: 1px solid var(--border);
+th {
+  text-align: left;
+}
+
+.header-cell-container {
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.table-header {
+  font-weight: 600;
+}
+
+.cell {
+  font-size: 12px;
+  padding: 10px 16px;
+}
+
+.cell:focus {
+  outline: none;
+  border: 0.25px solid blue;
+}
+
+.numeric-align {
+  text-align: right;
+}
+
+.align-end {
+  justify-self: end;
 }

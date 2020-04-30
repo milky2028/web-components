@@ -1,40 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('../../global.css');
 
 :host {
   display: block;
   width: 100%;
   --border: rgba(0, 0, 0, 0.12);
   --text: black;
-  font-size: 1rem;
-}
-
-* {
-  font-family: 'Roboto', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: 'liga';
-  box-sizing: border-box;
-}
-
-.mat-icon {
-  display: inline-block;
-  font-family: 'Material Icons' !important;
-  font-size: 1.2rem;
-  color: var(--border);
-  cursor: pointer;
-  border-radius: 2rem;
-  user-select: none;
-  transition: color 50ms ease;
-}
-
-.mat-icon:active {
-  color: var(--text);
-}
-
-.brightness-icon {
-  padding: 0.8rem;
-  margin: 0.2rem;
 }
 
 .page-header {
@@ -52,41 +22,37 @@ h2 {
 
 table {
   width: 100%;
+  min-width: 450px;
 }
 
 table,
 th,
 td {
-  border: 0.25px solid var(--border);
+  border: 0.5px solid var(--border);
 }
 
 th {
   text-align: left;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
 }
 
 .header-cell-container {
   display: grid;
   grid-auto-flow: column;
-}
-
-.table-header {
-  font-weight: 600;
+  align-items: center;
 }
 
 .cell {
   font-size: 12px;
-  padding: 10px 16px;
+  padding: 8px 16px;
 }
 
 .cell:focus {
-  outline: none;
-  border: 0.25px solid blue;
+  outline: 1px solid var(--primary-color);
 }
 
 .numeric-align {
   text-align: right;
-}
-
-.align-end {
-  justify-self: end;
 }

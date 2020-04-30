@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ColumnHeader, } from "./components/realtime-prices/realtime-prices";
 export namespace Components {
     interface StencilCounter {
         "count": number;
@@ -12,7 +13,9 @@ export namespace Components {
     interface StencilHello {
     }
     interface StencilRealtimePrices {
-        "loans": any[];
+        "primaryColor": string;
+        "rowData": any[];
+        "tableHeaders": ColumnHeader[];
     }
 }
 declare global {
@@ -47,7 +50,9 @@ declare namespace LocalJSX {
     interface StencilHello {
     }
     interface StencilRealtimePrices {
-        "loans"?: any[];
+        "primaryColor"?: string;
+        "rowData"?: any[];
+        "tableHeaders"?: ColumnHeader[];
     }
     interface IntrinsicElements {
         "stencil-counter": StencilCounter;

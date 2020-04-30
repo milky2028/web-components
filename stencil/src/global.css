@@ -11,4 +11,7 @@
 
 :root {
   font-size: 1rem;
+  --border: rgba(0, 0, 0, 0.12);
+  --icon: rgba(0, 0, 0, 0.24);
+  --text: black;
 }

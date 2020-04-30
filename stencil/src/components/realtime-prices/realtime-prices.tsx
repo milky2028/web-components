@@ -30,9 +30,9 @@ export class RealtimePrices {
     },
     {
       bidPrice: 190,
-      productLoanX: 'LXLarry',
       issuer: 'Larry',
-      offerPrice: 210
+      offerPrice: 210,
+      productLoanX: 'LXLarry'
     },
     { productLoanX: 'LXAdam', issuer: 'Adam', bidPrice: 105, offerPrice: 240 }
   ];
@@ -115,9 +115,26 @@ export class RealtimePrices {
     return (
       <tr>
         {headers.map(({ displayName, field }) => (
-          <th class="cell" onDblClick={this.#sortRowData(headers, field)}>
+          <th class="cell">
             <span class="header-cell-container">
               <span>{displayName}</span>
+              <div class="icon-container align-end">
+                {this.#currentSorting?.[field] && (
+                  <mat-icon
+                    class={`${
+                      this.#currentSorting?.[field] === 'asc' ? 'up' : 'down'
+                    }`}
+                  >
+                    trending_flat
+                  </mat-icon>
+                )}
+                <mat-icon
+                  clickable
+                  onIconClick={this.#sortRowData(headers, field)}
+                >
+                  sort
+                </mat-icon>
+              </div>
             </span>
           </th>
         ))}
@@ -141,29 +158,18 @@ export class RealtimePrices {
             headers.map(({ field }) => field),
             row
           )
-        )
-          .sort(([aKey], [bKey]) => {
-            const aIndex = this.tableHeaders.findIndex(
-              ({ field }) => field === aKey
-            );
-
-            const bIndex = this.tableHeaders.findIndex(
-              ({ field }) => field === bKey
-            );
-
-            return aIndex - bIndex;
-          })
-          .map(([key, value]) => {
-            const currentColumn = this.#findColumn(headers, key);
-            return (
-              <td
-                contentEditable={`${currentColumn?.editable}`}
-                class={`cell ${this.#isNumber(value)}`}
-              >
-                {value}
-              </td>
-            );
-          })}
+        ).map(([key, value]) => {
+          const currentColumn = this.#findColumn(headers, key);
+          return (
+            <td
+              contentEditable={`${currentColumn?.editable}`}
+              style={{ width: `${100 / headers.length - 1}%` }}
+              class={`cell ${this.#isNumber(value)}`}
+            >
+              {value}
+            </td>
+          );
+        })}
       </tr>
     ));
 
@@ -177,7 +183,10 @@ export class RealtimePrices {
     return (
       <Host>
         <h2 class="page-header">Realtime Prices</h2>
-        <table cellspacing="0">
+        <table
+          cellspacing="0"
+          style={{ minWidth: `${this.tableHeaders.length * 135}px` }}
+        >
           {this.#createHeaders(this.tableHeaders)}
           {this.#createTableData(this.tableHeaders, this.rowData)}
         </table>

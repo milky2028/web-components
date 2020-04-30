@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.mat-icon {
+  display: inline-block;
+  font-family: 'Material Icons' !important;
+  font-size: 1.2rem;
+  color: var(--icon);
+  cursor: pointer;
+  border-radius: 2rem;
+  user-select: none;
+  transition: color 50ms ease;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.mat-icon.clickable:active {
+  color: var(--text);
+}

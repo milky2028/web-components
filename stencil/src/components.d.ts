@@ -7,6 +7,9 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ColumnHeader, } from "./components/realtime-prices/realtime-prices";
 export namespace Components {
+    interface MatIcon {
+        "clickable": boolean;
+    }
     interface StencilCounter {
         "count": number;
     }
@@ -19,6 +22,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLMatIconElement extends Components.MatIcon, HTMLStencilElement {
+    }
+    var HTMLMatIconElement: {
+        prototype: HTMLMatIconElement;
+        new (): HTMLMatIconElement;
+    };
     interface HTMLStencilCounterElement extends Components.StencilCounter, HTMLStencilElement {
     }
     var HTMLStencilCounterElement: {
@@ -38,12 +47,17 @@ declare global {
         new (): HTMLStencilRealtimePricesElement;
     };
     interface HTMLElementTagNameMap {
+        "mat-icon": HTMLMatIconElement;
         "stencil-counter": HTMLStencilCounterElement;
         "stencil-hello": HTMLStencilHelloElement;
         "stencil-realtime-prices": HTMLStencilRealtimePricesElement;
     }
 }
 declare namespace LocalJSX {
+    interface MatIcon {
+        "clickable"?: boolean;
+        "onIconClick"?: (event: CustomEvent<any>) => void;
+    }
     interface StencilCounter {
         "count"?: number;
     }
@@ -55,6 +69,7 @@ declare namespace LocalJSX {
         "tableHeaders"?: ColumnHeader[];
     }
     interface IntrinsicElements {
+        "mat-icon": MatIcon;
         "stencil-counter": StencilCounter;
         "stencil-hello": StencilHello;
         "stencil-realtime-prices": StencilRealtimePrices;
@@ -64,6 +79,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "mat-icon": LocalJSX.MatIcon & JSXBase.HTMLAttributes<HTMLMatIconElement>;
             "stencil-counter": LocalJSX.StencilCounter & JSXBase.HTMLAttributes<HTMLStencilCounterElement>;
             "stencil-hello": LocalJSX.StencilHello & JSXBase.HTMLAttributes<HTMLStencilHelloElement>;
             "stencil-realtime-prices": LocalJSX.StencilRealtimePrices & JSXBase.HTMLAttributes<HTMLStencilRealtimePricesElement>;

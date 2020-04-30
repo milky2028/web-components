@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
+import { rowData, columns } from './testData';
 
 export interface ColumnHeader {
   displayName: string;
@@ -21,46 +22,8 @@ export class RealtimePrices {
   @Prop() primaryColor = '';
 
   #originalRowData: any[] = [];
-  @Prop({ mutable: true }) rowData: any[] = [
-    {
-      productLoanX: 'LXJim',
-      issuer: 'Jim',
-      bidPrice: 101,
-      offerPrice: 210
-    },
-    {
-      bidPrice: 190,
-      issuer: 'Larry',
-      offerPrice: 210,
-      productLoanX: 'LXLarry'
-    },
-    { productLoanX: 'LXAdam', issuer: 'Adam', bidPrice: 105, offerPrice: 240 }
-  ];
-
-  @Prop({ mutable: true }) tableHeaders: ColumnHeader[] = [
-    {
-      displayName: 'LoanX',
-      field: 'productLoanX',
-      sortType: 'string'
-    },
-    {
-      displayName: 'Issuer',
-      field: 'issuer',
-      sortType: 'string'
-    },
-    {
-      displayName: 'Bid Price',
-      field: 'bidPrice',
-      sortType: 'number',
-      editable: true
-    },
-    {
-      displayName: 'Offer Price',
-      field: 'offerPrice',
-      sortType: 'number',
-      editable: true
-    }
-  ];
+  @Prop({ mutable: true }) rowData: any[] = rowData;
+  @Prop({ mutable: true }) tableHeaders: ColumnHeader[] = columns;
 
   connectedCallback() {
     this.#originalRowData = this.rowData.slice();

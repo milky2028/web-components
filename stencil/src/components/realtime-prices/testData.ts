@@ -88,6 +88,11 @@ const columns: ColumnHeader[] = [
     sortType: 'string'
   },
   {
+    displayName: 'LoanX2',
+    field: 'productLoanX',
+    sortType: 'string'
+  },
+  {
     displayName: 'Issuer',
     field: 'issuer',
     sortType: 'string'

@@ -79,30 +79,37 @@ export class RealtimePrices {
   #createHeaders = (headers: ColumnHeader[]) => {
     return (
       <tr>
-        {headers.map(({ displayName, field }) => (
-          <th class="cell">
-            <span class="header-cell-container">
-              <span>{displayName}</span>
-              <div class="icon-container align-end">
-                {this.#currentSorting?.[field] && (
+        {headers
+          .filter((value, currentIndex, ogArray) => {
+            const firstIndex = ogArray.findIndex(
+              ({ field }) => field === value.field
+            );
+            return firstIndex === currentIndex;
+          })
+          .map(({ displayName, field }) => (
+            <th class="cell">
+              <span class="header-cell-container">
+                <span>{displayName}</span>
+                <div class="icon-container align-end">
+                  {this.#currentSorting?.[field] && (
+                    <mat-icon
+                      class={`${
+                        this.#currentSorting?.[field] === 'asc' ? 'up' : 'down'
+                      }`}
+                    >
+                      trending_flat
+                    </mat-icon>
+                  )}
                   <mat-icon
-                    class={`${
-                      this.#currentSorting?.[field] === 'asc' ? 'up' : 'down'
-                    }`}
+                    clickable
+                    onIconClick={this.#sortRowData(headers, field)}
                   >
-                    trending_flat
+                    sort
                   </mat-icon>
-                )}
-                <mat-icon
-                  clickable
-                  onIconClick={this.#sortRowData(headers, field)}
-                >
-                  sort
-                </mat-icon>
-              </div>
-            </span>
-          </th>
-        ))}
+                </div>
+              </span>
+            </th>
+          ))}
       </tr>
     );
   };

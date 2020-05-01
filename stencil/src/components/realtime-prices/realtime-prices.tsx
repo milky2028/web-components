@@ -128,7 +128,7 @@ export class RealtimePrices {
     return s;
   };
 
-  #isNumber = (value: any) => (isNaN(+value) ? '' : 'numeric-align');
+  #applyNumericStyles = (value: any) => (isNaN(+value) ? '' : 'numeric-align');
 
   #validateRow = (headers: string[], row: Record<string, any>) => {
     return Object.fromEntries(
@@ -155,7 +155,7 @@ export class RealtimePrices {
               }
               contentEditable={`${currentColumn?.editable}`}
               style={{ width: `${100 / headers.length - 1}%` }}
-              class={`cell ${this.#isNumber(value)}`}
+              class={`cell ${this.#applyNumericStyles(value)}`}
             >
               {value}
             </td>

@@ -67,6 +67,8 @@ export class RealtimePrices {
           } else {
             sorter('desc');
           }
+        } else {
+          sorter('asc');
         }
       } else {
         sorter('asc');
@@ -113,8 +115,8 @@ export class RealtimePrices {
     );
   };
 
-  #createTableData = (headers: ColumnHeader[], rowData: any[]) =>
-    rowData.map((row) => (
+  #createTableData = (headers: ColumnHeader[], rowData: any[]) => {
+    return rowData.map((row) => (
       <tr>
         {Object.entries(
           this.#validateRow(
@@ -135,6 +137,7 @@ export class RealtimePrices {
         })}
       </tr>
     ));
+  };
 
   #setupStyleVariables = () => {
     this.host.style.setProperty('--primary-color', this.primaryColor);

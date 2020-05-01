@@ -114,6 +114,20 @@ export class RealtimePrices {
     );
   };
 
+  #generateColName = (n: number) => {
+    const ordA = 'A'.charCodeAt(0);
+    const ordZ = 'Z'.charCodeAt(0);
+    const len = ordZ - ordA + 1;
+
+    let s = '';
+    while (n >= 0) {
+      s = String.fromCharCode((n % len) + ordA) + s;
+      n = Math.floor(n / len) - 1;
+    }
+
+    return s;
+  };
+
   #isNumber = (value: any) => (isNaN(+value) ? '' : 'numeric-align');
 
   #validateRow = (headers: string[], row: Record<string, any>) => {
@@ -122,18 +136,23 @@ export class RealtimePrices {
     );
   };
 
+  #rawCells: Record<string, HTMLTableCellElement | undefined> = {};
   #createTableData = (headers: ColumnHeader[], rowData: any[]) => {
-    return rowData.map((row) => (
+    this.#rawCells = {};
+    return rowData.map((row, r) => (
       <tr>
         {Object.entries(
           this.#validateRow(
             headers.map(({ field }) => field),
             row
           )
-        ).map(([key, value]) => {
+        ).map(([key, value], c) => {
           const currentColumn = this.#findColumn(headers, key);
           return (
             <td
+              ref={(el) =>
+                (this.#rawCells[`${this.#generateColName(c)}${r + 1}`] = el)
+              }
               contentEditable={`${currentColumn?.editable}`}
               style={{ width: `${100 / headers.length - 1}%` }}
               class={`cell ${this.#isNumber(value)}`}

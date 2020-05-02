@@ -114,18 +114,61 @@ export class RealtimePrices {
     );
   };
 
-  #generateColName = (n: number) => {
-    const ordA = 'A'.charCodeAt(0);
-    const ordZ = 'Z'.charCodeAt(0);
-    const len = ordZ - ordA + 1;
+  #parseColumnAndRow = (key: string) => {
+    const match = key.match(/col(\d+)row(\d+)/);
+    return match ? { col: +match[1], row: +match[2] } : null;
+  };
 
-    let s = '';
-    while (n >= 0) {
-      s = String.fromCharCode((n % len) + ordA) + s;
-      n = Math.floor(n / len) - 1;
-    }
+  #keyboardNavigation = (currentCell: string) => {
+    const upArrow = 38;
+    const downArrow = 40;
+    const leftArrow = 37;
+    const rightArrow = 39;
 
-    return s;
+    return (keyEvent: KeyboardEvent) => {
+      const cell = this.#parseColumnAndRow(currentCell);
+      switch (keyEvent.keyCode) {
+        case upArrow: {
+          keyEvent.preventDefault();
+          if (cell) {
+            const oneUp = this.#rawCells[`col${cell.col}row${cell.row - 1}`];
+            oneUp?.focus();
+          }
+          break;
+        }
+        case downArrow: {
+          keyEvent.preventDefault();
+          if (cell) {
+            const oneDown = this.#rawCells[`col${cell.col}row${cell.row + 1}`];
+            oneDown?.focus();
+          }
+          break;
+        }
+        case leftArrow: {
+          keyEvent.preventDefault();
+          if (cell) {
+            const oneLeft = this.#rawCells[`col${cell.col - 1}row${cell.row}`];
+            oneLeft?.focus();
+          }
+          break;
+        }
+        case rightArrow: {
+          keyEvent.preventDefault();
+          if (cell) {
+            const oneRight = this.#rawCells[`col${cell.col + 1}row${cell.row}`];
+            oneRight?.focus();
+          }
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    };
+  };
+
+  #generateColName = (columnNumber: number, rowNumber: number) => {
+    return `col${columnNumber}row${rowNumber}`;
   };
 
   #applyNumericStyles = (value: any) => (isNaN(+value) ? '' : 'numeric-align');
@@ -146,14 +189,13 @@ export class RealtimePrices {
             headers.map(({ field }) => field),
             row
           )
-        ).map(([key, value], c) => {
-          const currentColumn = this.#findColumn(headers, key);
+        ).map(([_, value], c) => {
+          const currentColName = this.#generateColName(c, r);
           return (
             <td
-              ref={(el) =>
-                (this.#rawCells[`${this.#generateColName(c)}${r + 1}`] = el)
-              }
-              contentEditable={`${currentColumn?.editable}`}
+              ref={(el) => (this.#rawCells[currentColName] = el)}
+              tabIndex={1}
+              onKeyDown={this.#keyboardNavigation(currentColName)}
               style={{ width: `${100 / headers.length - 1}%` }}
               class={`cell ${this.#applyNumericStyles(value)}`}
             >

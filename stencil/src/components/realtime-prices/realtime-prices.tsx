@@ -221,8 +221,10 @@ export class RealtimePrices {
           cellspacing="0"
           style={{ minWidth: `${this.tableHeaders.length * 135}px` }}
         >
-          {this.#createHeaders(this.tableHeaders)}
-          {this.#createTableData(this.tableHeaders, this.rowData)}
+          <thead>{this.#createHeaders(this.tableHeaders)}</thead>
+          <tbody>
+            {this.#createTableData(this.tableHeaders, this.rowData)}
+          </tbody>
         </table>
       </Host>
     );

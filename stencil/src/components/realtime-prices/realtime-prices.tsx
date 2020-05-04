@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
 import { rowData, columns } from './testData';
+import createExcelBorder from './excelCellBorder';
 
 export interface ColumnHeader {
   displayName: string;
@@ -27,6 +28,7 @@ export class RealtimePrices {
 
   connectedCallback() {
     this.#originalRowData = this.rowData.slice();
+    createExcelBorder();
   }
 
   #currentSorting: Record<string, SortDirection> | null = null;

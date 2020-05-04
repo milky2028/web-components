@@ -44,9 +44,18 @@ th {
   padding: 8px 16px;
 }
 
-.cell:focus {
-  outline: 2px solid var(--primary-color);
-  outline-offset: -2px;
+@supports (background: paint(id)) {
+  .cell:focus {
+    outline: none;
+    background: paint(excel-cell-border);
+  }
+}
+
+@supports not (background: paint(id)) {
+  .cell:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: -2px;
+  }
 }
 
 .numeric-align {

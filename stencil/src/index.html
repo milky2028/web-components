@@ -7,12 +7,75 @@
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
     />
     <title>Stencil Component Starter</title>
-
     <script type="module" src="/build/stencil.esm.js"></script>
     <script nomodule src="/build/stencil.js"></script>
   </head>
   <body>
-    <stencil-realtime-prices primary-color="#0d47a1"></stencil-realtime-prices>
+    <button id="chg">Change Row Data</button>
+    <script type="module">
+      const rtPrices = document.createElement('stencil-realtime-prices');
+      rtPrices.primaryColor = '#0d47a1';
+      rtPrices.tableHeaders = [
+        {
+          displayName: 'LoanX',
+          field: 'productLoanX',
+          sortType: 'string'
+        },
+        {
+          displayName: 'LoanX2',
+          field: 'productLoanX',
+          sortType: 'string'
+        },
+        {
+          displayName: 'Issuer',
+          field: 'issuer',
+          sortType: 'string'
+        },
+        {
+          displayName: 'Bid Price',
+          field: 'bidPrice',
+          sortType: 'number',
+          editable: true
+        },
+        {
+          displayName: 'Offer Price',
+          field: 'offerPrice',
+          sortType: 'number',
+          editable: true
+        }
+      ];
+
+      const rowData = [
+        {
+          productLoanX: 'LXJim',
+          issuer: 'Jim',
+          bidPrice: 101,
+          offerPrice: 210
+        },
+        {
+          bidPrice: 190,
+          issuer: 'Larry',
+          offerPrice: 210,
+          productLoanX: 'LXLarry'
+        },
+        {
+          productLoanX: 'LXAdam',
+          issuer: 'Adam',
+          bidPrice: 105,
+          offerPrice: 240
+        }
+      ];
+
+      rtPrices.rowData = rowData;
+
+      document.body.appendChild(rtPrices);
+
+      const chg = document.getElementById('chg');
+      chg.addEventListener('click', () => {
+        rowData[0].offerPrice = 69;
+        rtPrices.rowData = [...rowData];
+      });
+    </script>
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"

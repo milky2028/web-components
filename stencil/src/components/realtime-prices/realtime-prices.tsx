@@ -1,5 +1,4 @@
 import { Component, Host, h, Prop, Element } from '@stencil/core';
-import { rowData, columns } from './testData';
 import createExcelBorder from './excelCellBorder';
 
 export interface ColumnHeader {
@@ -23,8 +22,8 @@ export class RealtimePrices {
   @Prop() primaryColor = '';
 
   #originalRowData: any[] = [];
-  @Prop({ mutable: true }) rowData: any[] = rowData;
-  @Prop({ mutable: true }) tableHeaders: ColumnHeader[] = columns;
+  @Prop({ mutable: true }) rowData: any[] = [];
+  @Prop({ mutable: true }) tableHeaders: ColumnHeader[] = [];
 
   connectedCallback() {
     this.#originalRowData = this.rowData.slice();
@@ -221,7 +220,7 @@ export class RealtimePrices {
         <h2 class="page-header">Realtime Prices</h2>
         <table
           cellspacing="0"
-          style={{ minWidth: `${this.tableHeaders.length * 135}px` }}
+          style={{ minWidth: `${this.tableHeaders.length * 100}px` }}
         >
           <thead>{this.#createHeaders(this.tableHeaders)}</thead>
           <tbody>

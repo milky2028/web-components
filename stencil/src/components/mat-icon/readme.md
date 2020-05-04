@@ -5,6 +5,20 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property    | Attribute   | Description | Type      | Default |
+| ----------- | ----------- | ----------- | --------- | ------- |
+| `clickable` | `clickable` |             | `boolean` | `false` |
+
+
+## Events
+
+| Event       | Description | Type               |
+| ----------- | ----------- | ------------------ |
+| `iconClick` |             | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Used by

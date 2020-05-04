@@ -1,4 +1,12 @@
-import { Component, Host, h, Prop, Element } from '@stencil/core';
+import {
+  Component,
+  Host,
+  h,
+  Prop,
+  Element,
+  EventEmitter,
+  Event
+} from '@stencil/core';
 import createExcelBorder from './excelCellBorder';
 
 export interface ColumnHeader {
@@ -18,6 +26,7 @@ type SortDirection = 'asc' | 'desc';
 export class RealtimePrices {
   // @ts-ignore
   @Element() host: HTMLElement;
+  @Event() rowDataSorted: EventEmitter | null = null;
 
   @Prop() primaryColor = '';
 
@@ -38,6 +47,7 @@ export class RealtimePrices {
 
   #sortRowData = (headers: ColumnHeader[], field: string) => {
     const sorter = (direction: SortDirection | null) => {
+      this.rowDataSorted?.emit(`${field} sorted ${direction}`);
       if (!direction) {
         this.#currentSorting = null;
         this.rowData = this.#originalRowData.slice();

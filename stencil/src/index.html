@@ -54,9 +54,9 @@
         },
         {
           bidPrice: 190,
-          issuer: 'Larry',
+          issuer: 'Zip',
           offerPrice: 210,
-          productLoanX: 'LXLarry'
+          productLoanX: 'LXZip'
         },
         {
           productLoanX: 'LXAdam',
@@ -72,8 +72,12 @@
 
       const chg = document.getElementById('chg');
       chg.addEventListener('click', () => {
-        rowData[0].offerPrice = 69;
+        rowData[0].offerPrice = 55;
         rtPrices.rowData = [...rowData];
+      });
+
+      rtPrices.addEventListener('rowDataSorted', (event) => {
+        console.log(event);
       });
     </script>
     <link

@@ -64,6 +64,7 @@ declare namespace LocalJSX {
     interface StencilHello {
     }
     interface StencilRealtimePrices {
+        "onRowDataSorted"?: (event: CustomEvent<any>) => void;
         "primaryColor"?: string;
         "rowData"?: any[];
         "tableHeaders"?: ColumnHeader[];

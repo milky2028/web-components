@@ -5,7 +5,6 @@ export const config: Config = {
   taskQueue: 'async',
   buildEs5: false,
   hashFileNames: false,
-  globalStyle: 'src/global.css',
   outputTargets: [
     {
       type: 'www',

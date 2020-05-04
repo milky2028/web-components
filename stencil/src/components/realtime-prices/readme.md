@@ -14,6 +14,13 @@
 | `tableHeaders` | --              |             | `ColumnHeader[]` | `[]`    |
 
 
+## Events
+
+| Event           | Description | Type               |
+| --------------- | ----------- | ------------------ |
+| `rowDataSorted` |             | `CustomEvent<any>` |
+
+
 ## Dependencies
 
 ### Depends on

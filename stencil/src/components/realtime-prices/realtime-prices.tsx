@@ -13,7 +13,7 @@ export interface ColumnHeader {
   displayName: string;
   field: string;
   editable?: boolean;
-  sortType: 'string' | 'number';
+  type?: 'string' | 'number' | 'boolean';
 }
 
 type SortDirection = 'asc' | 'desc';
@@ -55,7 +55,7 @@ export class RealtimePrices {
         this.#currentSorting = { [field]: direction };
         const currentColumn = this.#findColumn(headers, field);
         this.rowData = this.rowData.slice().sort((a, b) => {
-          if (currentColumn?.sortType === 'number') {
+          if (currentColumn?.type === 'number') {
             return direction === 'asc'
               ? a[field] - b[field]
               : b[field] - a[field];
@@ -133,59 +133,122 @@ export class RealtimePrices {
     return match ? { col: +match[1], row: +match[2] } : null;
   };
 
-  #keyboardNavigation = (currentCell: string) => {
+  #nagivateWithKeyboard = (currentCellName: string) => {
     const upArrow = 38;
     const downArrow = 40;
     const leftArrow = 37;
     const rightArrow = 39;
 
     return (keyEvent: KeyboardEvent) => {
-      const cell = this.#parseColumnAndRow(currentCell);
-      switch (keyEvent.keyCode) {
-        case upArrow: {
-          keyEvent.preventDefault();
-          if (cell) {
-            const oneUp = this.#rawCells[`col${cell.col}row${cell.row - 1}`];
-            oneUp?.focus();
+      const cell = this.#parseColumnAndRow(currentCellName);
+      if (this.#isEditing) {
+        const enterKey = 13;
+        if (keyEvent.keyCode === enterKey) {
+          const currentCell = this.#rawCells[currentCellName];
+          if (currentCell) {
+            currentCell.contentEditable = 'false';
+            this.#isEditing = false;
+            if (cell) {
+              const oneDown = this.#rawCells[
+                `col${cell.col}row${cell.row + 1}`
+              ];
+              oneDown?.focus();
+              window.getSelection()?.removeAllRanges();
+            }
           }
-          break;
         }
-        case downArrow: {
-          keyEvent.preventDefault();
-          if (cell) {
-            const oneDown = this.#rawCells[`col${cell.col}row${cell.row + 1}`];
-            oneDown?.focus();
+      } else {
+        switch (keyEvent.keyCode) {
+          case upArrow: {
+            keyEvent.preventDefault();
+            if (cell) {
+              const oneUp = this.#rawCells[`col${cell.col}row${cell.row - 1}`];
+              oneUp?.focus();
+              window.getSelection()?.removeAllRanges();
+            }
+            break;
           }
-          break;
-        }
-        case leftArrow: {
-          keyEvent.preventDefault();
-          if (cell) {
-            const oneLeft = this.#rawCells[`col${cell.col - 1}row${cell.row}`];
-            oneLeft?.focus();
+          case downArrow: {
+            keyEvent.preventDefault();
+            if (cell) {
+              const oneDown = this.#rawCells[
+                `col${cell.col}row${cell.row + 1}`
+              ];
+              oneDown?.focus();
+              window.getSelection()?.removeAllRanges();
+            }
+            break;
           }
-          break;
-        }
-        case rightArrow: {
-          keyEvent.preventDefault();
-          if (cell) {
-            const oneRight = this.#rawCells[`col${cell.col + 1}row${cell.row}`];
-            oneRight?.focus();
+          case leftArrow: {
+            keyEvent.preventDefault();
+            if (cell) {
+              const oneLeft = this.#rawCells[
+                `col${cell.col - 1}row${cell.row}`
+              ];
+              oneLeft?.focus();
+              window.getSelection()?.removeAllRanges();
+            }
+            break;
           }
-          break;
-        }
-        default: {
-          break;
+          case rightArrow: {
+            keyEvent.preventDefault();
+            if (cell) {
+              const oneRight = this.#rawCells[
+                `col${cell.col + 1}row${cell.row}`
+              ];
+              oneRight?.focus();
+              window.getSelection()?.removeAllRanges();
+            }
+            break;
+          }
+          default: {
+            break;
+          }
         }
       }
     };
   };
 
-  #generateColName = (columnNumber: number, rowNumber: number) => {
+  #enterEditingMode = (
+    currentColumn: ColumnHeader | undefined,
+    cellName: string
+  ) => {
+    return () => {
+      if (currentColumn?.editable && !this.#isEditing) {
+        const cell = this.#rawCells[cellName];
+        if (cell) {
+          this.#isEditing = true;
+          cell.contentEditable = 'true';
+          cell.focus();
+        }
+      }
+    };
+  };
+
+  #updateRowData = (
+    currentColumn: ColumnHeader | undefined,
+    sourceRowIndex: number,
+    cellName: string
+  ) => {
+    return () => {
+      const cell = this.#rawCells[cellName];
+      if (cell) {
+        const value = cell.innerText;
+        if (currentColumn) {
+          this.rowData[sourceRowIndex][currentColumn?.field] = value;
+          this.rowData = [...this.rowData];
+        }
+      }
+    };
+  };
+
+  #generateCellName = (columnNumber: number, rowNumber: number) => {
     return `col${columnNumber}row${rowNumber}`;
   };
 
-  #applyNumericStyles = (value: any) => (isNaN(+value) ? '' : 'numeric-align');
+  #applyNumericStyles = (value: any) => {
+    return value === '' || isNaN(+value) ? '' : 'numeric-align';
+  };
 
   #validateRow = (headers: string[], row: Record<string, any>) => {
     return Object.fromEntries(
@@ -193,6 +256,11 @@ export class RealtimePrices {
     );
   };
 
+  #getCol = (headers: ColumnHeader[], field: string) => {
+    return headers.find((col) => col.field === field);
+  };
+
+  #isEditing = false;
   #rawCells: Record<string, HTMLTableCellElement | undefined> = {};
   #createTableData = (headers: ColumnHeader[], rowData: any[]) => {
     this.#rawCells = {};
@@ -203,13 +271,17 @@ export class RealtimePrices {
             headers.map(({ field }) => field),
             row
           )
-        ).map(([_, value], c) => {
-          const currentColName = this.#generateColName(c, r);
+        ).map(([key, value], c) => {
+          const currentColumn = this.#getCol(headers, key);
+          const cellName = this.#generateCellName(c, r);
           return (
             <td
-              ref={(el) => (this.#rawCells[currentColName] = el)}
+              ref={(el) => (this.#rawCells[cellName] = el)}
               tabIndex={1}
-              onKeyDown={this.#keyboardNavigation(currentColName)}
+              onBlur={() => (this.#isEditing = false)}
+              onKeyDown={this.#nagivateWithKeyboard(cellName)}
+              onDblClick={this.#enterEditingMode(currentColumn, cellName)}
+              onInput={this.#updateRowData(currentColumn, r, cellName)}
               class={`cell ${this.#applyNumericStyles(value)}`}
             >
               {value}

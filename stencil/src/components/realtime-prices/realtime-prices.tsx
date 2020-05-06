@@ -98,7 +98,10 @@ export class RealtimePrices {
             return firstIndex === currentIndex;
           })
           .map(({ displayName, field }) => (
-            <th class="cell">
+            <th
+              class="cell"
+              style={{ minWidth: `${displayName.length + 10}ch` }}
+            >
               <span class="header-cell-container">
                 <span>{displayName}</span>
                 <div class="icon-container align-end">
@@ -207,7 +210,6 @@ export class RealtimePrices {
               ref={(el) => (this.#rawCells[currentColName] = el)}
               tabIndex={1}
               onKeyDown={this.#keyboardNavigation(currentColName)}
-              style={{ width: `${100 / headers.length - 1}%` }}
               class={`cell ${this.#applyNumericStyles(value)}`}
             >
               {value}
@@ -228,10 +230,7 @@ export class RealtimePrices {
     return (
       <Host>
         <h2 class="page-header">Realtime Prices</h2>
-        <table
-          cellspacing="0"
-          style={{ minWidth: `${this.tableHeaders.length * 100}px` }}
-        >
+        <table>
           <thead>{this.#createHeaders(this.tableHeaders)}</thead>
           <tbody>
             {this.#createTableData(this.tableHeaders, this.rowData)}

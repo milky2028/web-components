@@ -15,35 +15,198 @@
     <script type="module">
       const rtPrices = document.createElement('stencil-realtime-prices');
       rtPrices.primaryColor = '#0d47a1';
-      rtPrices.tableHeaders = [
+      const colDefs = [
+        {
+          displayName: 'Lower Limit (bp)',
+          field: 'lowerLimit',
+          sortType: 'number'
+        },
+        {
+          displayName: 'Upper Limit (bp)',
+          sortType: 'number',
+          field: 'upperLimit'
+        },
         {
           displayName: 'LoanX',
           field: 'productLoanX',
-          sortType: 'string'
+          enableRowGroup: true
+        },
+        { displayName: 'Issuer Name', field: 'issuer' },
+        {
+          displayName: 'Quantity',
+          field: 'netQty',
+          sortType: 'number'
         },
         {
-          displayName: 'LoanX2',
-          field: 'productLoanX',
-          sortType: 'string'
+          displayName: 'Quantity Change',
+          field: 'qtyChange',
+          sortType: 'number'
         },
         {
-          displayName: 'Issuer',
-          field: 'issuer',
-          sortType: 'string'
+          displayName: 'Mock Quantity',
+          field: 'mockQty',
+          sortType: 'number'
         },
         {
-          displayName: 'Bid Price',
+          displayName: 'Buy/Sell',
+          field: 'buy/sell'
+        },
+        {
+          displayName: '% Notional',
+          field: 'percentTotalNotional',
+          sortType: 'number'
+        },
+        {
+          displayName: '% Notional Chg',
+          field: 'changeInPercentNotional',
+          sortType: 'number'
+        },
+        {
+          displayName: 'Proceeds',
+          field: 'cost',
+          sortType: 'number'
+        },
+        {
+          displayName: 'Mock Price',
+          field: 'mockPrice',
+          sortType: 'number'
+        },
+        {
+          displayName: 'Coupon',
+          field: 'spread',
+          sortType: 'number'
+        },
+        {
+          displayName: 'Market Price',
           field: 'bidPrice',
-          sortType: 'number',
-          editable: true
+          sortType: 'number'
         },
         {
           displayName: 'Offer Price',
           field: 'offerPrice',
-          sortType: 'number',
-          editable: true
+          sortType: 'number'
+        },
+        {
+          displayName: 'Maturity Date',
+          field: 'maturityDate'
+        },
+        {
+          displayName: 'Life',
+          field: 'life',
+          sortType: 'number'
+        },
+        { displayName: 'Lein', field: 'seniorityCode' },
+        {
+          displayName: 'Effective Yield',
+          field: 'effectiveYield'
+        },
+        {
+          displayName: 'Floor',
+          field: 'floorRate',
+          sortType: 'number'
+        },
+        { displayName: 'Cov Lite', field: 'covLite' },
+        { displayName: 'Position Agg Key', field: 'positionAggKey' },
+        {
+          displayName: 'Defaulted',
+          field: 'defaulted'
+        },
+
+        {
+          displayName: 'OC Spread',
+          field: 'ocSpread',
+          sortType: 'number'
+        },
+        {
+          displayName: 'Depth',
+          field: 'depth',
+          sortType: 'number'
+        },
+        {
+          displayName: 'Facility Amount',
+          field: 'facilityAmount',
+          sortType: 'number'
+        },
+        { displayName: 'Asset', field: 'assetDescription' },
+        { displayName: 'Country', field: 'country' },
+        {
+          displayName: 'Purchase Price',
+          field: 'purchasePrice',
+          sortType: 'number'
+        },
+        {
+          displayName: `Moody's WARF`,
+          field: 'moodysWarf',
+          sortType: 'number'
+        },
+        {
+          displayName: `Moody's Rating`,
+          field: 'moodysRating'
+        },
+        {
+          displayName: `Moody's Industry`,
+          field: 'moodysIndustry'
+        },
+        {
+          displayName: `Moody's Corp Family Rating`,
+          field: 'moodysCorpFamilyRating'
+        },
+        {
+          displayName: `Moody's Facility Rating`,
+          field: 'moodysFacilityRating'
+        },
+        {
+          displayName: `Moody's Default Probability Rating`,
+          field: 'moodysDefaultProbRating'
+        },
+        {
+          displayName: `Moody's Default Probability Notched`,
+          field: 'moodysNotchedDefaultProbRating'
+        },
+        {
+          displayName: `Moody's Outlook`,
+          field: 'moodysOutlook'
+        },
+        {
+          displayName: `Moody's Recovery`,
+          field: 'moodysRecoveryRate',
+          sortType: 'number'
+        },
+
+        {
+          displayName: 'S&P Asset Recovery Rating',
+          field: 'snpAssetRecoveryRating'
+        },
+        {
+          displayName: 'S&P Collateral Obligation Rating',
+          field: 'snpCollateralObligationRating'
+        },
+        {
+          displayName: 'S&P Industry',
+          field: 'snpIndustry'
+        },
+        {
+          displayName: 'S&P Issuer Credit Rating',
+          field: 'snpIssuerCreditRating'
+        },
+        { displayName: 'S&P Outlook', field: 'snpOutlook' },
+        { displayName: 'S&P Rating', field: 'snpRating' },
+        {
+          displayName: 'S&P Default Rate/WARF',
+          field: 'snpDefaultRate',
+          sortType: 'number'
+        },
+        {
+          displayName: 'S&P Recovery',
+          field: 'snpRecoveryRate',
+          sortType: 'number'
+        },
+        {
+          displayName: 'Discounted',
+          field: 'discounted'
         }
       ];
+      rtPrices.tableHeaders = colDefs;
 
       const rowData = [
         {

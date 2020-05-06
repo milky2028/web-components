@@ -12,7 +12,7 @@ export default function createExcelCellBorder() {
             .get('--primary-color')
             .toString()
             .replace(/"/g, '');
-          ctx.lineWidth = 3;
+          ctx.lineWidth = 4;
           ctx.strokeStyle = primaryColor;
 
           ctx.beginPath();

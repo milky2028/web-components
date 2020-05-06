@@ -7,8 +7,12 @@ export const config: Config = {
   hashFileNames: false,
   outputTargets: [
     {
+      type: 'dist',
+      esmLoaderPath: '../loader'
+    },
+    {
       type: 'www',
-      dir: '../public/stencil',
+      dir: 'www',
       serviceWorker: null // disable service workers
     }
   ]

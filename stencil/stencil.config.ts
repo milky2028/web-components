@@ -12,7 +12,7 @@ export const config: Config = {
     },
     {
       type: 'www',
-      dir: 'www',
+      dir: '../public/stencil',
       serviceWorker: null // disable service workers
     }
   ]

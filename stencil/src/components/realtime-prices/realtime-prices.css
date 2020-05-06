@@ -13,6 +13,7 @@
   display: block;
   width: 100%;
   font-size: 1rem;
+  overflow: auto;
   --border: lightgray;
   --icon: silver;
   --text: black;
@@ -46,6 +47,7 @@ th {
   text-align: left;
   font-weight: 600;
   user-select: none;
+  letter-spacing: 0.25px;
 }
 
 .header-cell-container {

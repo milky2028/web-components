@@ -126,7 +126,7 @@ export class RealtimePrices {
   };
 
   #parseColumnAndRow = (key: string) => {
-    const match = key.match(/col(\d+)row(\d+)/);
+    const match = key.match(/col(\d+?)row(\d+?)/);
     return match ? { col: +match[1], row: +match[2] } : null;
   };
 

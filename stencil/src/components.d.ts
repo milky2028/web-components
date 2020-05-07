@@ -16,6 +16,9 @@ export namespace Components {
     interface StencilHello {
     }
     interface StencilRealtimePrices {
+        /**
+          * An HTML or hex color string
+         */
         "primaryColor": string;
         "rowData": any[];
         "tableHeaders": ColumnHeader[];
@@ -65,9 +68,12 @@ declare namespace LocalJSX {
     }
     interface StencilRealtimePrices {
         /**
-          * This is a pointless @event rowDataSorted that just lets the parent know when rowData has been sorted.
+          * This is a pointless @event rowDataSorted that lets the parent know when rowData has been sorted.
          */
         "onRowDataSorted"?: (event: CustomEvent<any>) => void;
+        /**
+          * An HTML or hex color string
+         */
         "primaryColor"?: string;
         "rowData"?: any[];
         "tableHeaders"?: ColumnHeader[];

@@ -7,18 +7,18 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type             | Default |
-| -------------- | --------------- | ----------- | ---------------- | ------- |
-| `primaryColor` | `primary-color` |             | `string`         | `''`    |
-| `rowData`      | --              |             | `any[]`          | `[]`    |
-| `tableHeaders` | --              |             | `ColumnHeader[]` | `[]`    |
+| Property       | Attribute       | Description                 | Type             | Default |
+| -------------- | --------------- | --------------------------- | ---------------- | ------- |
+| `primaryColor` | `primary-color` | An HTML or hex color string | `string`         | `''`    |
+| `rowData`      | --              |                             | `any[]`          | `[]`    |
+| `tableHeaders` | --              |                             | `ColumnHeader[]` | `[]`    |
 
 
 ## Events
 
-| Event           | Description                                                                                           | Type               |
-| --------------- | ----------------------------------------------------------------------------------------------------- | ------------------ |
-| `rowDataSorted` | This is a pointless @event rowDataSorted that just lets the parent know when rowData has been sorted. | `CustomEvent<any>` |
+| Event           | Description                                                                                      | Type               |
+| --------------- | ------------------------------------------------------------------------------------------------ | ------------------ |
+| `rowDataSorted` | This is a pointless @event rowDataSorted that lets the parent know when rowData has been sorted. | `CustomEvent<any>` |
 
 
 ## Dependencies

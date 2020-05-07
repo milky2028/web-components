@@ -29,6 +29,7 @@ export class RealtimePrices {
   /** This is a pointless @event rowDataSorted that lets the parent know when rowData has been sorted. */
   @Event() rowDataSorted: EventEmitter | null = null;
 
+  /** An HTML or hex color string */
   @Prop() primaryColor = '';
 
   #originalRowData: any[] = [];

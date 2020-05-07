@@ -1,5 +1,6 @@
 export default function createExcelCellBorder() {
-  const paint = `
+  if (CSS && 'paintWorklet' in CSS) {
+    const paint = `
     registerPaint(
       'excel-cell-border',
       class {
@@ -32,13 +33,11 @@ export default function createExcelCellBorder() {
       }
     );`;
 
-  const worklet = new Blob([paint], {
-    type: 'application/javascript'
-  });
+    const worklet = new Blob([paint], {
+      type: 'application/javascript'
+    });
 
-  const url = URL.createObjectURL(worklet);
-
-  if (CSS && 'paintWorklet' in CSS) {
+    const url = URL.createObjectURL(worklet);
     // @ts-ignore
     CSS.paintWorklet.addModule(url);
   }

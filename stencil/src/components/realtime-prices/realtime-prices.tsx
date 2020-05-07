@@ -302,10 +302,12 @@ export class RealtimePrices {
             <td
               ref={(el) => (this.#rawCells[cellName] = el)}
               tabIndex={1}
-              onBlur={() => (this.#isEditing = false)}
+              onBlur={() => {
+                this.#isEditing = false;
+                this.#updateRowData(currentColumn, rowIndex, cellName);
+              }}
               onKeyDown={this.#nagivateWithKeyboard(cellName)}
               onDblClick={this.#enterEditingMode(currentColumn, cellName)}
-              onInput={this.#updateRowData(currentColumn, rowIndex, cellName)}
               /** align numbers to the right similar to excel */
               class={`cell ${
                 currentColumn?.type === 'number' ? 'numeric-align' : ''

@@ -255,17 +255,15 @@ export class RealtimePrices {
     sourceRowIndex: number,
     cellName: string
   ) => {
-    return () => {
-      const cell = this.#rawCells[cellName];
-      if (cell) {
-        const value = cell.innerText;
-        if (currentColumn) {
-          const clonedRowData = [...this.rowData];
-          clonedRowData[sourceRowIndex][currentColumn?.field] = value;
-          this.rowData = clonedRowData;
-        }
+    const cell = this.#rawCells[cellName];
+    if (cell) {
+      const value = cell.innerText;
+      if (currentColumn) {
+        const clonedRowData = [...this.rowData];
+        clonedRowData[sourceRowIndex][currentColumn?.field] = value;
+        this.rowData = clonedRowData;
       }
-    };
+    }
   };
 
   /** I spent a solid chunk of time trying to setup column names with Excel's A, AB, AAA naming scheme, but this turned out to be more readable in the long run. */
@@ -283,6 +281,8 @@ export class RealtimePrices {
   #getCol = (headers: ColumnHeader[], field: string) => {
     return headers.find((col) => col.field === field);
   };
+
+  #isNumber = (value: any) => !isNaN(+value);
 
   #isEditing = false;
   /** #rawCells holds referencs to the raw cell HTML elements for every cell. We need this to be able to manipulate focus. */
@@ -310,9 +310,7 @@ export class RealtimePrices {
               onKeyDown={this.#nagivateWithKeyboard(cellName)}
               onDblClick={this.#enterEditingMode(currentColumn, cellName)}
               /** align numbers to the right similar to excel */
-              class={`cell ${
-                currentColumn?.type === 'number' ? 'numeric-align' : ''
-              }`}
+              class={`cell ${this.#isNumber(value) ? 'numeric-align' : ''}`}
             >
               {value}
             </td>

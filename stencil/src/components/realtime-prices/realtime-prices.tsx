@@ -51,7 +51,7 @@ export class RealtimePrices {
     * In the context of web components though, true encapsulation is pretty important,
     * so keeping most data inaccessible to the parent is actually pretty important and a new feature in JS we should take advantage of.
 
-    * Class methods cannot begin wigth #, so we just use arrow functions for every function so it can remain private.
+    * Class methods cannot begin with #, so we just use arrow functions for every function so it can remain private.
     * These are compiled to WeakMaps. 
     */
   #findColumn = (headers: ColumnHeader[], key: string) => {

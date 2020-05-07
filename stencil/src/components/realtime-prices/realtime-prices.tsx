@@ -152,12 +152,12 @@ export class RealtimePrices {
     const downArrow = 40;
     const leftArrow = 37;
     const rightArrow = 39;
+    const enterKey = 13;
 
     return (keyEvent: KeyboardEvent) => {
       const cell = this.#parseColumnAndRow(currentCellName);
       /** If we're editing, the arrows are used to move between characters, not cells. */
       if (this.#isEditing) {
-        const enterKey = 13;
         if (keyEvent.keyCode === enterKey) {
           const currentCell = this.#rawCells[currentCellName];
           if (currentCell) {
@@ -185,7 +185,8 @@ export class RealtimePrices {
             }
             break;
           }
-          case downArrow: {
+          case downArrow:
+          case enterKey: {
             keyEvent.preventDefault();
             if (cell) {
               const oneDown = this.#rawCells[

@@ -64,6 +64,9 @@ declare namespace LocalJSX {
     interface StencilHello {
     }
     interface StencilRealtimePrices {
+        /**
+          * This is a pointless @event rowDataSorted that just lets the parent know when rowData has been sorted.
+         */
         "onRowDataSorted"?: (event: CustomEvent<any>) => void;
         "primaryColor"?: string;
         "rowData"?: any[];

@@ -26,6 +26,7 @@ type SortDirection = 'asc' | 'desc';
 export class RealtimePrices {
   // @ts-ignore
   @Element() host: HTMLElement;
+  /** This is a pointless @event rowDataSorted that lets the parent know when rowData has been sorted. */
   @Event() rowDataSorted: EventEmitter | null = null;
 
   @Prop() primaryColor = '';
@@ -34,6 +35,7 @@ export class RealtimePrices {
   @Prop({ mutable: true }) rowData: any[] = [];
   @Prop({ mutable: true }) tableHeaders: ColumnHeader[] = [];
 
+  /** Runs each time the component is connected. Part of the web components spec. */
   connectedCallback() {
     this.#originalRowData = this.rowData.slice();
     createExcelBorder();
@@ -41,6 +43,16 @@ export class RealtimePrices {
 
   #currentSorting: Record<string, SortDirection> | null = null;
 
+  /** 
+    * Anything starting with a # uses the new ESM private class fields spec.
+    * Nobody else likes that it uses # instead of the word private either.
+
+    * In the context of web components though, true encapsulation is pretty important,
+    * so keeping most data inaccessible to the parent is actually pretty important and a new feature in JS we should take advantage of.
+
+    * Class methods cannot begin wigth #, so we just use arrow functions for every function so it can remain private.
+    * These are compiled to WeakMaps. 
+    */
   #findColumn = (headers: ColumnHeader[], key: string) => {
     return headers.find(({ field }) => field === key);
   };
@@ -100,6 +112,7 @@ export class RealtimePrices {
           .map(({ displayName, field }) => (
             <th
               class="cell"
+              /** The column is as wide as its title plus some padding. */
               style={{ minWidth: `${displayName.length + 10}ch` }}
             >
               <span class="header-cell-container">
@@ -141,11 +154,13 @@ export class RealtimePrices {
 
     return (keyEvent: KeyboardEvent) => {
       const cell = this.#parseColumnAndRow(currentCellName);
+      /** If we're editing, the arrows are used to move between characters, not cells. */
       if (this.#isEditing) {
         const enterKey = 13;
         if (keyEvent.keyCode === enterKey) {
           const currentCell = this.#rawCells[currentCellName];
           if (currentCell) {
+            /** Pressing enter exits editing mode and moves down one cell, matching behavior in Excel. */
             currentCell.contentEditable = 'false';
             this.#isEditing = false;
             if (cell) {
@@ -153,6 +168,7 @@ export class RealtimePrices {
                 `col${cell.col}row${cell.row + 1}`
               ];
               oneDown?.focus();
+              /** We don't select text when moving cells. This is mostly to address a browser bug. */
               window.getSelection()?.removeAllRanges();
             }
           }
@@ -218,6 +234,13 @@ export class RealtimePrices {
         const cell = this.#rawCells[cellName];
         if (cell) {
           this.#isEditing = true;
+          /**
+
+            * contenteditable is an html attribute that is used to make any element editable.
+            * VSCode uses a textarea to make the DOM editable. I tried this method, but preferred contenteditable.
+            * Titles in Google Docs use contenteditable.
+           
+           */
           cell.contentEditable = 'true';
           cell.focus();
         }
@@ -243,14 +266,12 @@ export class RealtimePrices {
     };
   };
 
+  /** I spent a solid chunk of time trying to setup column names with Excel's A, AB, AAA naming scheme, but this turned out to be more readable in the long run. */
   #generateCellName = (columnNumber: number, rowNumber: number) => {
     return `col${columnNumber}row${rowNumber}`;
   };
 
-  #applyNumericStyles = (value: any) => {
-    return value === '' || isNaN(+value) ? '' : 'numeric-align';
-  };
-
+  /** If data is missing from the source data object, fill it in to keep cells aligned. */
   #validateRow = (headers: string[], row: Record<string, any>) => {
     return Object.fromEntries(
       headers.map((field) => [field, row[field] ?? ''])
@@ -262,6 +283,7 @@ export class RealtimePrices {
   };
 
   #isEditing = false;
+  /** #rawCells holds referencs to the raw cell HTML elements for every cell. We need this to be able to manipulate focus. */
   #rawCells: Record<string, HTMLTableCellElement | undefined> = {};
   #createTableData = (headers: ColumnHeader[], rowData: any[]) => {
     this.#rawCells = {};
@@ -283,7 +305,10 @@ export class RealtimePrices {
               onKeyDown={this.#nagivateWithKeyboard(cellName)}
               onDblClick={this.#enterEditingMode(currentColumn, cellName)}
               onInput={this.#updateRowData(currentColumn, rowIndex, cellName)}
-              class={`cell ${this.#applyNumericStyles(value)}`}
+              /** align numbers to the right similar to excel */
+              class={`cell ${
+                currentColumn?.type === 'number' ? 'numeric-align' : ''
+              }`}
             >
               {value}
             </td>
@@ -293,11 +318,37 @@ export class RealtimePrices {
     ));
   };
 
+  /**
+   * --primary-color is a CSS varaible that's used throughout the app.
+   * We set this variable with JS from the inherited on the component itself.
+   */
   #setupStyleVariables = () => {
     this.host.style.setProperty('--primary-color', this.primaryColor);
   };
 
+  /**
+
+    * This is the vdom render method.
+    * This function runs every time a @Prop is changed.
+
+    * Getters and setters are used to track @Prop changes.
+    * A setter is run every time a value is set with =.
+    * Since object types are passed by reference, changing the value of an object key will not cause a re-render.
+    * Nor will pushing to an array.
+    * The way to get around this is to use the spread operator when changing a value, which will trigger a re-render.
+    * 
+    * Example:
+    * rowData = [...rowData, newItem]
+    * instead of
+    * rowData.push(newItem)
+    * 
+    * After a prop change is detected (there are lifecycle methods to know when this happens),
+    * the render method is run and creates a virtualized representation of the DOM.
+    * This virtualized representation of the DOM is compared against the actual DOM and any differences are applied, so that only the minimal amount of work is done.
+   
+   */
   render() {
+    /** Make sure we apply CSS variables every render in case they've changed. */
     this.#setupStyleVariables();
 
     return (

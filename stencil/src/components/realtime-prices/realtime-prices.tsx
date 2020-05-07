@@ -235,8 +235,9 @@ export class RealtimePrices {
       if (cell) {
         const value = cell.innerText;
         if (currentColumn) {
-          this.rowData[sourceRowIndex][currentColumn?.field] = value;
-          this.rowData = [...this.rowData];
+          const clonedRowData = [...this.rowData];
+          clonedRowData[sourceRowIndex][currentColumn?.field] = value;
+          this.rowData = clonedRowData;
         }
       }
     };
@@ -264,16 +265,16 @@ export class RealtimePrices {
   #rawCells: Record<string, HTMLTableCellElement | undefined> = {};
   #createTableData = (headers: ColumnHeader[], rowData: any[]) => {
     this.#rawCells = {};
-    return rowData.map((row, r) => (
+    return rowData.map((row, rowIndex) => (
       <tr>
         {Object.entries(
           this.#validateRow(
             headers.map(({ field }) => field),
             row
           )
-        ).map(([key, value], c) => {
+        ).map(([key, value], colIndex) => {
           const currentColumn = this.#getCol(headers, key);
-          const cellName = this.#generateCellName(c, r);
+          const cellName = this.#generateCellName(colIndex, rowIndex);
           return (
             <td
               ref={(el) => (this.#rawCells[cellName] = el)}
@@ -281,7 +282,7 @@ export class RealtimePrices {
               onBlur={() => (this.#isEditing = false)}
               onKeyDown={this.#nagivateWithKeyboard(cellName)}
               onDblClick={this.#enterEditingMode(currentColumn, cellName)}
-              onInput={this.#updateRowData(currentColumn, r, cellName)}
+              onInput={this.#updateRowData(currentColumn, rowIndex, cellName)}
               class={`cell ${this.#applyNumericStyles(value)}`}
             >
               {value}

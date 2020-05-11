@@ -51,7 +51,7 @@ export class RealtimePrices {
     * In the context of web components though, true encapsulation is pretty important,
     * so keeping most data inaccessible to the parent is actually pretty important and a new feature in JS we should take advantage of.
 
-    * Class methods cannot begin wigth #, so we just use arrow functions for every function so it can remain private.
+    * Class methods cannot begin with #, so we just use arrow functions for every function so it can remain private.
     * These are compiled to WeakMaps. 
     */
   #findColumn = (headers: ColumnHeader[], key: string) => {
@@ -152,12 +152,12 @@ export class RealtimePrices {
     const downArrow = 40;
     const leftArrow = 37;
     const rightArrow = 39;
+    const enterKey = 13;
 
     return (keyEvent: KeyboardEvent) => {
       const cell = this.#parseColumnAndRow(currentCellName);
       /** If we're editing, the arrows are used to move between characters, not cells. */
       if (this.#isEditing) {
-        const enterKey = 13;
         if (keyEvent.keyCode === enterKey) {
           const currentCell = this.#rawCells[currentCellName];
           if (currentCell) {
@@ -185,7 +185,8 @@ export class RealtimePrices {
             }
             break;
           }
-          case downArrow: {
+          case downArrow:
+          case enterKey: {
             keyEvent.preventDefault();
             if (cell) {
               const oneDown = this.#rawCells[
@@ -254,17 +255,15 @@ export class RealtimePrices {
     sourceRowIndex: number,
     cellName: string
   ) => {
-    return () => {
-      const cell = this.#rawCells[cellName];
-      if (cell) {
-        const value = cell.innerText;
-        if (currentColumn) {
-          const clonedRowData = [...this.rowData];
-          clonedRowData[sourceRowIndex][currentColumn?.field] = value;
-          this.rowData = clonedRowData;
-        }
+    const cell = this.#rawCells[cellName];
+    if (cell) {
+      const value = cell.innerText;
+      if (currentColumn) {
+        const clonedRowData = [...this.rowData];
+        clonedRowData[sourceRowIndex][currentColumn?.field] = value;
+        this.rowData = clonedRowData;
       }
-    };
+    }
   };
 
   /** I spent a solid chunk of time trying to setup column names with Excel's A, AB, AAA naming scheme, but this turned out to be more readable in the long run. */
@@ -282,6 +281,8 @@ export class RealtimePrices {
   #getCol = (headers: ColumnHeader[], field: string) => {
     return headers.find((col) => col.field === field);
   };
+
+  #isNumber = (value: any) => !isNaN(+value);
 
   #isEditing = false;
   /** #rawCells holds referencs to the raw cell HTML elements for every cell. We need this to be able to manipulate focus. */
@@ -309,9 +310,7 @@ export class RealtimePrices {
               onKeyDown={this.#nagivateWithKeyboard(cellName)}
               onDblClick={this.#enterEditingMode(currentColumn, cellName)}
               /** align numbers to the right similar to excel */
-              class={`cell ${
-                currentColumn?.type === 'number' ? 'numeric-align' : ''
-              }`}
+              class={`cell ${this.#isNumber(value) ? 'numeric-align' : ''}`}
             >
               {value}
             </td>

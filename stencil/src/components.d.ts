@@ -70,7 +70,7 @@ declare namespace LocalJSX {
         /**
           * This is a pointless @event rowDataSorted that lets the parent know when rowData has been sorted.
          */
-        "onRowDataSorted"?: (event: CustomEvent<any>) => void;
+        "onRowDataChanged"?: (event: CustomEvent<any>) => void;
         /**
           * An HTML or hex color string
          */

@@ -6,7 +6,8 @@ import {
   Element,
   EventEmitter,
   Event,
-  Listen
+  Listen,
+  Watch
 } from '@stencil/core';
 import createExcelBorder from './excelCellBorder';
 
@@ -28,7 +29,7 @@ export class RealtimePrices {
   // @ts-ignore
   @Element() host: HTMLElement;
   /** This is a pointless @event rowDataSorted that lets the parent know when rowData has been sorted. */
-  @Event() rowDataSorted: EventEmitter | null = null;
+  @Event() rowDataChanged: EventEmitter<Record<string, any>> | null = null;
   @Listen('paste', { target: 'window' }) onDataPasted(e: ClipboardEvent) {
     e.preventDefault();
     const clipData = JSON.parse(e.clipboardData!.getData('text/plain'));
@@ -47,6 +48,9 @@ export class RealtimePrices {
 
   #originalRowData: any[] = [];
   @Prop({ mutable: true }) rowData: any[] = [];
+  @Watch('rowData') onRowDataChanged(newRowData: Record<string, any>) {
+    this.rowDataChanged?.emit(newRowData);
+  }
   @Prop({ mutable: true }) tableHeaders: ColumnHeader[] = [];
 
   /** Runs each time the component is connected. Part of the web components spec. */
@@ -73,7 +77,6 @@ export class RealtimePrices {
 
   #sortRowData = (headers: ColumnHeader[], field: string) => {
     const sorter = (direction: SortDirection | null) => {
-      this.rowDataSorted?.emit(`${field} sorted ${direction}`);
       if (!direction) {
         this.#currentSorting = null;
         this.rowData = this.#originalRowData.slice();
@@ -273,7 +276,10 @@ export class RealtimePrices {
       const value = cell.innerText;
       if (currentColumn) {
         const clonedRowData = [...this.rowData];
-        clonedRowData[sourceRowIndex][currentColumn?.field] = value;
+        clonedRowData[sourceRowIndex][currentColumn?.field] =
+          currentColumn.type === 'number' && this.#isNumber(value)
+            ? +value
+            : value;
         this.rowData = clonedRowData;
       }
     }
@@ -338,7 +344,6 @@ export class RealtimePrices {
    * We set this variable with JS from the inherited on the component itself.
    */
   #setupStyleVariables = () => {
-    console.log(this.primaryColor);
     this.host.style.setProperty('--primary-color', this.primaryColor);
   };
 

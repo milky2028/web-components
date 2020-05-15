@@ -16,9 +16,9 @@
 
 ## Events
 
-| Event           | Description                                                                                      | Type               |
-| --------------- | ------------------------------------------------------------------------------------------------ | ------------------ |
-| `rowDataSorted` | This is a pointless @event rowDataSorted that lets the parent know when rowData has been sorted. | `CustomEvent<any>` |
+| Event            | Description                                                                                      | Type               |
+| ---------------- | ------------------------------------------------------------------------------------------------ | ------------------ |
+| `rowDataChanged` | This is a pointless @event rowDataSorted that lets the parent know when rowData has been sorted. | `CustomEvent<any>` |
 
 
 ## Dependencies

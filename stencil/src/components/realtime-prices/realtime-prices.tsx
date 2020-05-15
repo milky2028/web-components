@@ -5,7 +5,8 @@ import {
   Prop,
   Element,
   EventEmitter,
-  Event
+  Event,
+  Listen
 } from '@stencil/core';
 import createExcelBorder from './excelCellBorder';
 
@@ -28,6 +29,18 @@ export class RealtimePrices {
   @Element() host: HTMLElement;
   /** This is a pointless @event rowDataSorted that lets the parent know when rowData has been sorted. */
   @Event() rowDataSorted: EventEmitter | null = null;
+  @Listen('paste', { target: 'window' }) onDataPasted(e: ClipboardEvent) {
+    e.preventDefault();
+    const clipData = JSON.parse(e.clipboardData!.getData('text/plain'));
+    this.tableHeaders = Object.entries(clipData[0]).map(([key, value]) => ({
+      displayName: key,
+      field: key,
+      editable: true,
+      type: this.#isNumber(value) ? 'number' : 'string'
+    }));
+
+    this.rowData = clipData;
+  }
 
   /** An HTML or hex color string */
   @Prop() primaryColor = '';
@@ -312,7 +325,7 @@ export class RealtimePrices {
               /** align numbers to the right similar to excel */
               class={`cell ${this.#isNumber(value) ? 'numeric-align' : ''}`}
             >
-              {value}
+              {typeof value === 'object' ? '' : value}
             </td>
           );
         })}
@@ -357,6 +370,11 @@ export class RealtimePrices {
       <Host>
         <h2 class="page-header">Realtime Prices</h2>
         <table>
+          {this.tableHeaders.length === 0 && (
+            <th tabIndex={1} class="cell empty-table">
+              Use Control/Command+V to Paste In Table Data
+            </th>
+          )}
           <thead>{this.#createHeaders(this.tableHeaders)}</thead>
           <tbody>
             {this.#createTableData(this.tableHeaders, this.rowData)}

@@ -13,7 +13,6 @@
   display: block;
   width: 100%;
   font-size: 1rem;
-  overflow: auto;
   --border: lightgray;
   --icon: silver;
   --text: black;
@@ -35,6 +34,12 @@ h2 {
 table {
   width: 100%;
   cursor: cell;
+}
+
+.empty-table {
+  height: 150px;
+  vertical-align: middle;
+  text-align: center;
 }
 
 table,

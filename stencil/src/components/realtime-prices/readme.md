@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                 | Type             | Default |
-| -------------- | --------------- | --------------------------- | ---------------- | ------- |
-| `primaryColor` | `primary-color` | An HTML or hex color string | `string`         | `''`    |
-| `rowData`      | --              |                             | `any[]`          | `[]`    |
-| `tableHeaders` | --              |                             | `ColumnHeader[]` | `[]`    |
+| Property       | Attribute       | Description                 | Type             | Default   |
+| -------------- | --------------- | --------------------------- | ---------------- | --------- |
+| `primaryColor` | `primary-color` | An HTML or hex color string | `string`         | `'black'` |
+| `rowData`      | --              |                             | `any[]`          | `[]`      |
+| `tableHeaders` | --              |                             | `ColumnHeader[]` | `[]`      |
 
 
 ## Events

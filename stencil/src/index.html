@@ -12,74 +12,7 @@
   </head>
   <body>
     <button id="chg">Change Row Data</button>
-    <script type="module">
-      const rtPrices = document.createElement('stencil-realtime-prices');
-      rtPrices.primaryColor = '#0d47a1';
-      // rtPrices.tableHeaders = [
-      //   {
-      //     displayName: 'LoanX',
-      //     field: 'productLoanX',
-      //     type: 'string'
-      //   },
-      //   {
-      //     displayName: 'LoanX2',
-      //     field: 'productLoanX',
-      //     type: 'string'
-      //   },
-      //   {
-      //     displayName: 'Issuer',
-      //     field: 'issuer',
-      //     type: 'string'
-      //   },
-      //   {
-      //     displayName: 'Bid Price',
-      //     field: 'bidPrice',
-      //     type: 'number',
-      //     editable: true
-      //   },
-      //   {
-      //     displayName: 'Offer Price',
-      //     field: 'offerPrice',
-      //     type: 'number',
-      //     editable: true
-      //   }
-      // ];
-
-      // const rowData = [
-      //   {
-      //     productLoanX: 'LXJim',
-      //     issuer: 'Jim',
-      //     bidPrice: 101,
-      //     offerPrice: 210
-      //   },
-      //   {
-      //     bidPrice: 190,
-      //     issuer: 'Zip',
-      //     offerPrice: 210,
-      //     productLoanX: 'LXZip'
-      //   },
-      //   {
-      //     productLoanX: 'LXAdam',
-      //     issuer: 'Adam',
-      //     bidPrice: 105,
-      //     offerPrice: 240
-      //   }
-      // ];
-
-      // rtPrices.rowData = rowData;
-
-      document.body.appendChild(rtPrices);
-
-      const chg = document.getElementById('chg');
-      chg.addEventListener('click', () => {
-        rowData[0].offerPrice = Math.floor(Math.random() * 100);
-        rtPrices.rowData = [...rowData];
-      });
-
-      rtPrices.addEventListener('rowDataSorted', (event) => {
-        console.log(event);
-      });
-    </script>
+    <stencil-realtime-prices primary-color="#0d47a1"></stencil-realtime-prices>
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"

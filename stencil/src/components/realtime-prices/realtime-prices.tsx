@@ -43,7 +43,7 @@ export class RealtimePrices {
   }
 
   /** An HTML or hex color string */
-  @Prop() primaryColor = '';
+  @Prop() primaryColor = 'black';
 
   #originalRowData: any[] = [];
   @Prop({ mutable: true }) rowData: any[] = [];
@@ -338,6 +338,7 @@ export class RealtimePrices {
    * We set this variable with JS from the inherited on the component itself.
    */
   #setupStyleVariables = () => {
+    console.log(this.primaryColor);
     this.host.style.setProperty('--primary-color', this.primaryColor);
   };
 
